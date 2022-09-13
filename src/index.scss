@@ -2,12 +2,23 @@
 @import "the-new-css-reset";
 
 html {
-    font-size: 62.5%;
+  font-size: 62.5%;
 }
 body {
-    background-color: black;
-    color: $color-text;
-    font-size: $size-vw;
-    font-family: $font-family;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  color: $color-text;
+  font-size: $size-vw;
+  font-family: $font-family;
 }
-
+.App {
+  display: flex;
+  justify-content: center;
+  background-color: grey;
+  width: 100vw;
+  height: 100vh;
+}
+.App:focus {
+  background-color: black;
+}

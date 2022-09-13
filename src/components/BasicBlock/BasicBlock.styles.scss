@@ -1,7 +1,10 @@
 .basicBlock {
-    position: relative;
-    display: flex;
-    width: 40px;
-    height: 40px;
-    background-color: red;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  top: 0;
+  left: 0;
 }
