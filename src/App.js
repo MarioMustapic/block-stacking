@@ -1,11 +1,10 @@
 import './App.css';
+import {BasicBlock} from "./components/BasicBlock/BasicBlock.component";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-
-      </header>
+      <BasicBlock>1</BasicBlock>
     </div>
   );
 }

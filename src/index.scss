@@ -1,0 +1,13 @@
+@import "./styles/index";
+@import "the-new-css-reset";
+
+html {
+    font-size: 62.5%;
+}
+body {
+    background-color: black;
+    color: $color-text;
+    font-size: $size-vw;
+    font-family: $font-family;
+}
+
