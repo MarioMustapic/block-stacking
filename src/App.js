@@ -1,21 +1,29 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import "./App.css";
-import { BasicBlock } from "./components/BasicBlock/BasicBlock.component";
+import { CompositeBlock } from "./components/CompositeBlock/CompositeBlock.component";
 
 function App() {
-  const [state, setstate] = useState({ top: 0, left: 0, x: "top", y: "left" });
+  const [state, setstate] = useState({
+    top: 0,
+    left: 0,
+    x: "top",
+    y: "left",
+    gravityTimer: 100000000,
+    basicBlockSize: 20,
+    backgroundColor: "green",
+  });
   console.log(state);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setstate((state) => ({
         ...state,
-        [state.x]: state.top + 1,
+        [state.x]: state.top + state.basicBlockSize,
       }));
-    }, 1000);
+    }, state.gravityTimer);
     return () => clearTimeout(timer);
-  }, []);
+  }, [state.gravityTimer]);
 
   const handleKeyDown = (e) => {
     e.preventDefault();
@@ -28,27 +36,25 @@ function App() {
     else if (e.code === "ArrowDown") {
       return setstate((state) => ({
         ...state,
-        [state.x]: state.top + 1,
+        [state.x]: state.top + state.basicBlockSize,
       }));
     } else if (e.code === "ArrowRight") {
       return setstate((state) => ({
         ...state,
-        [state.y]: state.left + 1,
+        [state.y]: state.left + state.basicBlockSize,
       }));
     } else if (e.code === "ArrowLeft") {
       return setstate((state) => ({
         ...state,
-        [state.y]: state.left - 1,
+        [state.y]: state.left - state.basicBlockSize,
       }));
     }
   };
   return (
     <div className="App" tabIndex={0} onKeyDown={handleKeyDown}>
-      <BasicBlock
-        backgroundColor={"red"}
-        top={`${state.top}vw`}
-        left={`${state.left}vw`}
+      <CompositeBlock
         text={12}
+        blockState={state}
         onClick={handleKeyDown}
         onKeyDown={handleKeyDown}
       />

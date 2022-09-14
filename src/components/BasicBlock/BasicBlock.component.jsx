@@ -3,10 +3,10 @@ import "./BasicBlock.styles.scss";
 export function BasicBlock(props) {
   const style = {
     backgroundColor: props.backgroundColor,
-    top: props.top,
-    left: props.left,
+    height: props.blockState.basicBlockSize,
+    width: props.blockState.basicBlockSize,
   };
-
+  console.log(props.blockState.basicBlockSize);
   return (
     <div
       className="basicBlock"
