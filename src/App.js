@@ -1,9 +1,12 @@
+import { useState } from "react";
 import "./App.css";
 import { BasicBlock } from "./components/BasicBlock/BasicBlock.component";
 
 function App() {
-  const move = { top: "0", left: "0" };
-  const handleKeyDown = (e, move) => {
+  const [state, setstate] = useState({ top: 0, left: 0, x: "top", y: "left" });
+  console.log(state);
+
+  const handleKeyDown = (e) => {
     e.preventDefault();
     if (
       e.code !== "ArrowDown" &&
@@ -11,15 +14,29 @@ function App() {
       e.code !== "ArrowRight"
     )
       return;
-    else if (e.code === "ArrowDown") return move;
-    console.log(e.code);
+    else if (e.code === "ArrowDown") {
+      return setstate((state) => ({
+        ...state,
+        [state.x]: state.top + 1,
+      }));
+    } else if (e.code === "ArrowRight") {
+      return setstate((state) => ({
+        ...state,
+        [state.y]: state.left + 1,
+      }));
+    } else if (e.code === "ArrowLeft") {
+      return setstate((state) => ({
+        ...state,
+        [state.y]: state.left - 1,
+      }));
+    }
   };
   return (
     <div className="App" tabIndex={0} onKeyDown={handleKeyDown}>
       <BasicBlock
         backgroundColor={"red"}
-        top={`${move.top} vw`}
-        left={`${move.left} vw`}
+        top={`${state.top}vw`}
+        left={`${state.left}vw`}
         text={12}
         onClick={handleKeyDown}
         onKeyDown={handleKeyDown}
