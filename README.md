@@ -4,8 +4,8 @@ Project is made as training in React and JS.
 
 ---
 
-[**Try me on Netlify**](#)
-[![Netlify Status](#](#)
+[**Try me on Netlify**](https://block-stacking.netlify.app/)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a300f0e5-5564-4dcc-9664-88eef51a1ccd/deploy-status)](https://app.netlify.com/sites/block-stacking/deploys)
 
 ---
 
