@@ -9,14 +9,15 @@ function App() {
     top: 0,                       //def value for starting Y-axis position(top)
     left: 0,                      //def value for starting X-axis position(centered)
     x: "top",                     //proxy for top keyword
-    y: "left",                    //proxy for left keyword
+    y: "left",
+    text: "&#x2705;",                    //proxy for left keyword
     gravityTimer: 100000000,      //timer for downward movment over time  
     basicBlockSize: 20,           //size in pixels
     compositeBlockSize: 4,        //max height or width in number of basicBlocks
-    backgroundColor: "green",     //def background color 
+    backgroundColor: "green",     //def background color
+    blockType: Math.round(Math.random() * 6),
   });
-  console.log(state);
-
+  console.log(state.blockType);
   useEffect(() => {
     const timer = setInterval(() => {
       setstate((state) => ({
@@ -55,7 +56,6 @@ function App() {
   return (
     <div className="App" tabIndex={0} onKeyDown={handleKeyDown}>
       <CompositeBlock
-        text={12}
         blockState={state}
         onClick={handleKeyDown}
         onKeyDown={handleKeyDown}

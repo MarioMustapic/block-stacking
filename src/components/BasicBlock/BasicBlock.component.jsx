@@ -8,7 +8,7 @@ export function BasicBlock(props) {
     top: props.compositeBlock.top,
     left: props.compositeBlock.left,
   };
-  console.log(props.compositeBlock);
+  console.log(props.blockState.text);
   return (
     <div
       className="basicBlock"
@@ -16,7 +16,7 @@ export function BasicBlock(props) {
       onClick={props.onClick}
       onKeyDown={props.onKeyDown}
     >
-      {props.text}
+      {props.blockState.text}
     </div>
   );
 }
