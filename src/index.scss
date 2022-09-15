@@ -12,13 +12,13 @@ body {
   font-size: $size-vw;
   font-family: $font-family;
 }
-.App {
+.playingField {
   display: flex;
   justify-content: center;
   background-color: grey;
   width: 80vw;
   height: 90vh;
 }
-.App:focus {
+.playingField:focus {
   background-color: black;
 }

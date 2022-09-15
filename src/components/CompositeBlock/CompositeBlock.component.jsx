@@ -4,7 +4,7 @@ import "./CompositeBlock.styles.scss";
 
 export function CompositeBlock(props) {
   useEffect(() => {
-    return () => (props.blockState.blockType = Math.round(Math.random() * 6));
+    return () => (props.blockState.blockType = Math.floor(Math.random() * 7));
   }, [props.blockState]);
 
   const style = {
@@ -17,10 +17,10 @@ export function CompositeBlock(props) {
   };
   const size = props.blockState.basicBlockSize;
   const compositeBlockList = [
-    [[0, 0, 0, 0], [0, 1, 2, 3], "I-block"],
-    [[0, 1, 0, 1], [0, 0, 1, 1], "O-block"],
-    [[0, 0, 0, 1], [0, 1, 2, 2], "L-Block"],
-    [[1, 1, 1, 0], [0, 1, 2, 2], "J-block"],
+    [[1, 1, 1, 1], [0, 1, 2, 3], "I-block"],
+    [[1, 2, 1, 2], [0, 0, 1, 1], "O-block"],
+    [[1, 1, 1, 2], [0, 1, 2, 2], "L-Block"],
+    [[2, 2, 2, 1], [0, 1, 2, 2], "J-block"],
     [[1, 0, 1, 2], [0, 1, 1, 1], "T-block"],
     [[0, 1, 1, 2], [0, 0, 1, 1], "Z-block"],
     [[2, 1, 1, 0], [0, 0, 1, 1], "S-block"],

@@ -9,13 +9,13 @@ function App() {
     top: 0,                       //def value for starting Y-axis position(top)
     left: 0,                      //def value for starting X-axis position(centered)
     x: "top",                     //proxy for top keyword
-    y: "left",
-    text: "",                    //proxy for left keyword
+    y: "left",                    //proxy for left keyword
+    text: "",                     //block text (atm no use)
     gravityTimer: 100000000,      //timer for downward movment over time  
     basicBlockSize: 20,           //size in pixels
     compositeBlockSize: 4,        //max height or width in number of basicBlocks
     backgroundColor: "green",     //def background color
-    blockType: Math.round(Math.random() * 6),
+    blockType: Math.floor(Math.random() * 7),  //block randomizer
   });
   console.log(state.blockType);
   useEffect(() => {
@@ -54,12 +54,22 @@ function App() {
     }
   };
   return (
-    <div className="App" tabIndex={0} onKeyDown={handleKeyDown}>
-      <CompositeBlock
-        blockState={state}
-        onClick={handleKeyDown}
+    <div className="App">
+      <div
+        className="playingField"
+        tabIndex={0}
         onKeyDown={handleKeyDown}
-      />
+        style={{
+          width: `${state.basicBlockSize * 12}px`,
+          height: `${state.basicBlockSize * 28}px`,
+        }}
+      >
+        <CompositeBlock
+          blockState={state}
+          onClick={handleKeyDown}
+          onKeyDown={handleKeyDown}
+        />
+      </div>
     </div>
   );
 }
