@@ -4,14 +4,16 @@ import "./App.css";
 import { CompositeBlock } from "./components/CompositeBlock/CompositeBlock.component";
 
 function App() {
+  // prettier-ignore
   const [state, setstate] = useState({
-    top: 0,
-    left: 0,
-    x: "top",
-    y: "left",
-    gravityTimer: 100000000,
-    basicBlockSize: 20,
-    backgroundColor: "green",
+    top: 0,                       //def value for starting Y-axis position(top)
+    left: 0,                      //def value for starting X-axis position(centered)
+    x: "top",                     //proxy for top keyword
+    y: "left",                    //proxy for left keyword
+    gravityTimer: 100000000,      //timer for downward movment over time  
+    basicBlockSize: 20,           //size in pixels
+    compositeBlockSize: 4,        //max height or width in number of basicBlocks
+    backgroundColor: "green",     //def background color 
   });
   console.log(state);
 

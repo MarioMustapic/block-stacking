@@ -2,11 +2,13 @@ import "./BasicBlock.styles.scss";
 
 export function BasicBlock(props) {
   const style = {
-    backgroundColor: props.backgroundColor,
+    backgroundColor: props.blockState.backgroundColor,
     height: props.blockState.basicBlockSize,
     width: props.blockState.basicBlockSize,
+    top: props.compositeBlock.top,
+    left: props.compositeBlock.left,
   };
-  console.log(props.blockState.basicBlockSize);
+  console.log(props.compositeBlock);
   return (
     <div
       className="basicBlock"
