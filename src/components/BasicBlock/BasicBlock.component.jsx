@@ -8,7 +8,6 @@ export function BasicBlock(props) {
     top: props.compositeBlock.top,
     left: props.compositeBlock.left,
   };
-  console.log(props.blockState.text);
   return (
     <div
       className="basicBlock"

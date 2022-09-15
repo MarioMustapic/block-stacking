@@ -10,7 +10,7 @@ function App() {
     left: 0,                      //def value for starting X-axis position(centered)
     x: "top",                     //proxy for top keyword
     y: "left",
-    text: "&#x2705;",                    //proxy for left keyword
+    text: "",                    //proxy for left keyword
     gravityTimer: 100000000,      //timer for downward movment over time  
     basicBlockSize: 20,           //size in pixels
     compositeBlockSize: 4,        //max height or width in number of basicBlocks
