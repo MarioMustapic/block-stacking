@@ -63,6 +63,7 @@ function App() {
         style={{
           width: `${state.basicBlockSize * 12}px`,
           height: `${state.basicBlockSize * 28}px`,
+          left: `${window.innerWidth / 2 - (state.basicBlockSize * 12) / 2}px`,
         }}
       >
         <CompositeBlock

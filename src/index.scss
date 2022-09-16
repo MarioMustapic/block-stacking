@@ -5,19 +5,16 @@ html {
   font-size: 62.5%;
 }
 body {
-  display: flex;
-  justify-content: center;
   background-color: white;
   color: $color-text;
   font-size: $size-vw;
   font-family: $font-family;
 }
 .playingField {
+  position: relative;
   display: flex;
   justify-content: center;
   background-color: grey;
-  width: 80vw;
-  height: 90vh;
 }
 .playingField:focus {
   background-color: black;
