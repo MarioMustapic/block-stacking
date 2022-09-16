@@ -8,16 +8,18 @@ function App() {
   const [state, setstate] = useState({
     top: 0,                       //def value for starting Y-axis position(top)
     left: 0,                      //def value for starting X-axis position(centered)
+    rotation: 0,                  //def value for angle of composite block
     x: "top",                     //proxy for top keyword
     y: "left",                    //proxy for left keyword
+    z: "rotation",                 //proxy for rotatio keyword
     text: "",                     //block text (atm no use)
-    gravityTimer: 100000000,      //timer for downward movment over time  
+    gravityTimer: 5000,      //timer for downward movment over time  
     basicBlockSize: 20,           //size in pixels
     compositeBlockSize: 4,        //max height or width in number of basicBlocks
     backgroundColor: "green",     //def background color
     blockType: Math.floor(Math.random() * 7),  //block randomizer
   });
-  console.log(state.blockType);
+  console.log(state);
   useEffect(() => {
     const timer = setInterval(() => {
       setstate((state) => ({
@@ -30,13 +32,7 @@ function App() {
 
   const handleKeyDown = (e) => {
     e.preventDefault();
-    if (
-      e.code !== "ArrowDown" &&
-      e.code !== "ArrowLeft" &&
-      e.code !== "ArrowRight"
-    )
-      return;
-    else if (e.code === "ArrowDown") {
+    if (e.code === "ArrowDown") {
       return setstate((state) => ({
         ...state,
         [state.x]: state.top + state.basicBlockSize,
@@ -50,6 +46,11 @@ function App() {
       return setstate((state) => ({
         ...state,
         [state.y]: state.left - state.basicBlockSize,
+      }));
+    } else if (e.code === "ArrowUp") {
+      return setstate((state) => ({
+        ...state,
+        [state.z]: state.rotation + 90,
       }));
     }
   };

@@ -14,6 +14,7 @@ export function CompositeBlock(props) {
       props.blockState.basicBlockSize * props.blockState.compositeBlockSize,
     width:
       props.blockState.basicBlockSize * props.blockState.compositeBlockSize,
+    transform: `rotate(${props.blockState.rotation}deg)`,
   };
   const size = props.blockState.basicBlockSize;
   const compositeBlockList = [
