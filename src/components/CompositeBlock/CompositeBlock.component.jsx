@@ -1,38 +1,8 @@
-import { useState } from "react";
 import { useEffect } from "react";
 import { BasicBlock } from "../BasicBlock/BasicBlock.component";
 import "./CompositeBlock.styles.scss";
 
 export function CompositeBlock(props) {
-  const [compositeBlockCords, setCompositeBlockCords] = useState({
-    top: "",
-    left: "",
-    y: "top",
-    x: "left",
-  });
-  useEffect(() => {
-    for (let i = 0; i < 4; i++) {
-      const compositeBlockColision = document.querySelector(
-        `.basicBlock__${[i]}`
-      );
-      const xCord = compositeBlockColision.getBoundingClientRect().x;
-      const yCord = compositeBlockColision.getBoundingClientRect().y;
-      setCompositeBlockCords((compositeBlockCords) => ({
-        ...compositeBlockCords,
-        [compositeBlockCords.y]: yCord,
-        [compositeBlockCords.x]: xCord,
-      }));
-    }
-  }, [compositeBlockCords.top, compositeBlockCords.left]);
-  console.log(compositeBlockCords);
-
-  // const getCompositeBlockCords = () => {
-
-  // };
-  // useEffect(() => {
-  //   colisionDetection();
-  // }, []);
-
   useEffect(() => {
     return () => (props.blockState.blockType = Math.floor(Math.random() * 7));
   }, [props.blockState]);
