@@ -1,11 +1,11 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { BasicBlock } from "../BasicBlock/BasicBlock.component";
 import "./CompositeBlock.styles.scss";
 
 export function CompositeBlock(props) {
-  useEffect(() => {
-    return () => (props.blockState.blockType = Math.floor(Math.random() * 7));
-  }, [props.blockState]);
+  // useEffect(() => {
+  //   return () => (props.blockState.blockType = Math.floor(Math.random() * 7));
+  // }, [props.blockState]);
 
   const style = {
     top: props.blockState.top,
@@ -30,10 +30,22 @@ export function CompositeBlock(props) {
   const offSetY = compositeBlockList[props.blockState.blockType][1];
   const compositeBlockRecipe = {
     recipe: [
-      { top: size * offSetY[0], left: size * offSetX[0] },
-      { top: size * offSetY[1], left: size * offSetX[1] },
-      { top: size * offSetY[2], left: size * offSetX[2] },
-      { top: size * offSetY[3], left: size * offSetX[3] },
+      {
+        top: size * offSetY[0],
+        left: size * (offSetX[0] + props.blockState.offSetToRight),
+      },
+      {
+        top: size * offSetY[1],
+        left: size * (offSetX[1] + props.blockState.offSetToRight),
+      },
+      {
+        top: size * offSetY[2],
+        left: size * (offSetX[2] + props.blockState.offSetToRight),
+      },
+      {
+        top: size * offSetY[3],
+        left: size * (offSetX[3] + props.blockState.offSetToRight),
+      },
     ],
   };
   const basicBlocks = compositeBlockRecipe.recipe.map(

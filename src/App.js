@@ -10,11 +10,12 @@ function App() {
     left: 0,                      //def value for starting X-axis position(centered)
     rotation: 0,                  //def value for angle of composite block
     isInColision: false,          //def value for colision logic
+    offSetToRight: 4,
     x: "top",                     //proxy for top keyword
     y: "left",                    //proxy for left keyword
     z: "rotation",                //proxy for rotatio keyword
     text: "",                     //block text (atm no use)
-    gravityTimer: 5000,           //timer for downward movment over time  
+    gravityTimer: 100000,           //timer for downward movment over time  
     basicBlockSize: 20,           //size in pixels
     compositeBlockSize: 4,        //max height or width in number of basicBlocks
     backgroundColor: "green",     //def background color
@@ -47,7 +48,7 @@ function App() {
         ...state,
         [state.y]: state.left - state.basicBlockSize,
       }));
-    } else if (e.code === "ArrowUp") {
+    } else if (e.code === "ArrowUp" && state.isInColision === false) {
       return setstate((state) => ({
         ...state,
         [state.z]: state.rotation + 90,
