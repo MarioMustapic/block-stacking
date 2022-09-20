@@ -2,20 +2,34 @@ import { useEffect, useState } from "react";
 import "./BasicBlock.styles.scss";
 
 export function BasicBlock(props) {
-  const [initialBlockCords, setblockCords] = useState({
+  // console.log(props.compositeBlock);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log("clicked");
+  };
+  const [state, setState] = useState({
     top: "",
     left: "",
     y: "top",
     x: "left",
   });
-  let calculatedTop = initialBlockCords.top + props.blockState.top;
-  let calculatedLeft = initialBlockCords.left + props.blockState.left;
-  console.log(props.blockState.isInColision);
-  props.blockState.isInColision = !(calculatedTop < 540);
-  props.blockState.isInColision = !(calculatedLeft < 540);
-  console.log(props.blockState.isInColision);
-  console.log(calculatedTop);
-  console.log(calculatedLeft);
+  console.log(state.top);
+  let calculatedY = props.compositeBlock.top + props.blockState.top;
+  let calculatedX = props.compositeBlock.left + props.blockState.left;
+
+  props.blockState.isInColision.down = !(
+    calculatedY <
+    (props.blockState.playingFieldHeight - 1) * props.blockState.basicBlockSize
+  );
+  props.blockState.isInColision.right = !(
+    calculatedX <
+    (props.blockState.playingFieldWidth - 1) * props.blockState.basicBlockSize
+  );
+  props.blockState.isInColision.left = !(
+    calculatedX > props.blockState.basicBlockSize
+  );
+
   const className = `basicBlock__${props.indexkey} basicBlock`;
   const style = {
     backgroundColor: props.blockState.backgroundColor,
@@ -24,17 +38,16 @@ export function BasicBlock(props) {
     top: props.compositeBlock.top,
     left: props.compositeBlock.left,
   };
-
   useEffect(() => {
     const blockColision = document.querySelector(
       `.basicBlock__${[props.indexkey]}`
     );
     const xCord = blockColision.getBoundingClientRect().x;
     const yCord = blockColision.getBoundingClientRect().y;
-    setblockCords((initialBlockCords) => ({
-      ...initialBlockCords,
-      [initialBlockCords.y]: yCord,
-      [initialBlockCords.x]: xCord,
+    setState((state) => ({
+      ...state,
+      [state.y]: yCord,
+      [state.x]: xCord,
     }));
   }, [props.indexkey]);
 
@@ -43,8 +56,8 @@ export function BasicBlock(props) {
       className={className}
       indexkey={props.indexkey}
       style={style}
-      onClick={props.onClick}
       onKeyDown={props.onKeyDown}
+      onClick={handleClick}
     >
       {props.blockState.text}
     </div>

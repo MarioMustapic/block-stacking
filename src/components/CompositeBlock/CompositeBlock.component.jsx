@@ -21,7 +21,7 @@ export function CompositeBlock(props) {
     [[1, 1, 1, 1], [0, 1, 2, 3], "I-block"],
     [[1, 2, 1, 2], [0, 0, 1, 1], "O-block"],
     [[1, 1, 1, 2], [0, 1, 2, 2], "L-Block"],
-    [[2, 2, 2, 1], [0, 1, 2, 2], "J-block"],
+    [[1, 1, 1, 0], [0, 1, 2, 2], "J-block"],
     [[1, 0, 1, 2], [0, 1, 1, 1], "T-block"],
     [[0, 1, 1, 2], [0, 0, 1, 1], "Z-block"],
     [[2, 1, 1, 0], [0, 0, 1, 1], "S-block"],
@@ -32,19 +32,27 @@ export function CompositeBlock(props) {
     recipe: [
       {
         top: size * offSetY[0],
-        left: size * (offSetX[0] + props.blockState.offSetToRight),
+        left:
+          size *
+          (offSetX[0] + Math.floor(props.blockState.playingFieldWidth / 2)),
       },
       {
         top: size * offSetY[1],
-        left: size * (offSetX[1] + props.blockState.offSetToRight),
+        left:
+          size *
+          (offSetX[1] + Math.floor(props.blockState.playingFieldWidth / 2)),
       },
       {
         top: size * offSetY[2],
-        left: size * (offSetX[2] + props.blockState.offSetToRight),
+        left:
+          size *
+          (offSetX[2] + Math.floor(props.blockState.playingFieldWidth / 2)),
       },
       {
         top: size * offSetY[3],
-        left: size * (offSetX[3] + props.blockState.offSetToRight),
+        left:
+          size *
+          (offSetX[3] + Math.floor(props.blockState.playingFieldWidth / 2)),
       },
     ],
   };
@@ -63,7 +71,7 @@ export function CompositeBlock(props) {
       <div
         className="compositeBlock"
         style={style}
-        onClick={props.onClick}
+        onClick={props.handleClick}
         onKeyDown={props.onKeyDown}
       >
         {basicBlocks}

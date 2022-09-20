@@ -1,0 +1,8 @@
+.playingField {
+  position: relative;
+  display: flex;
+  background-color: grey;
+}
+.playingField:focus {
+  background-color: black;
+}

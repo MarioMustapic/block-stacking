@@ -10,11 +10,3 @@ body {
   font-size: $size-vw;
   font-family: $font-family;
 }
-.playingField {
-  position: relative;
-  display: flex;
-  background-color: grey;
-}
-.playingField:focus {
-  background-color: black;
-}
