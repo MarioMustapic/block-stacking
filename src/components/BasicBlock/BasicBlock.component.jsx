@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import "./BasicBlock.styles.scss";
 
 export function BasicBlock(props) {
@@ -8,13 +8,6 @@ export function BasicBlock(props) {
     e.preventDefault();
     console.log("clicked");
   };
-  const [state, setState] = useState({
-    top: "",
-    left: "",
-    y: "top",
-    x: "left",
-  });
-  console.log(state.top);
   let calculatedY = props.compositeBlock.top + props.blockState.top;
   let calculatedX = props.compositeBlock.left + props.blockState.left;
 
@@ -38,18 +31,6 @@ export function BasicBlock(props) {
     top: props.compositeBlock.top,
     left: props.compositeBlock.left,
   };
-  useEffect(() => {
-    const blockColision = document.querySelector(
-      `.basicBlock__${[props.indexkey]}`
-    );
-    const xCord = blockColision.getBoundingClientRect().x;
-    const yCord = blockColision.getBoundingClientRect().y;
-    setState((state) => ({
-      ...state,
-      [state.y]: yCord,
-      [state.x]: xCord,
-    }));
-  }, [props.indexkey]);
 
   return (
     <div

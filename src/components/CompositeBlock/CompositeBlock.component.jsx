@@ -1,12 +1,18 @@
-// import { useEffect } from "react";
+import { useEffect } from "react";
 import { BasicBlock } from "../BasicBlock/BasicBlock.component";
 import "./CompositeBlock.styles.scss";
 
 export function CompositeBlock(props) {
-  // useEffect(() => {
-  //   return () => (props.blockState.blockType = Math.floor(Math.random() * 7));
-  // }, [props.blockState]);
-
+  const toAppend = props.blockState.to.append;
+  useEffect(() => {
+    if (toAppend === false) return;
+    const playingField = document.querySelector(".playingField");
+    const basicBlocks = document.querySelectorAll(".playingField .basicBlock");
+    console.log(basicBlocks);
+    playingField.append(...basicBlocks);
+    props.blockState.to.append = false;
+    return () => (props.blockState.blockType = Math.floor(Math.random() * 7));
+  }, [props.blockState, toAppend]);
   const style = {
     top: props.blockState.top,
     left: props.blockState.left,
