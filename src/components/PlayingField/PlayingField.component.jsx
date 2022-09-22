@@ -34,15 +34,16 @@ export function PlayingField(props) {
       compositeBlockSize: 5,        //max height or width in number of basicBlocks
       backgroundColor: "green",     //def background color
       blockType: Math.floor(Math.random() * 7),  //block randomizer
-    });
+  });
+  console.log(state);
   const moveRight = () => {
-    setstate((state) => ({
+    setstate(() => ({
       ...state,
       [state.y]: state.left + state.basicBlockSize,
     }));
   };
   const moveLeft = () => {
-    setstate((state) => ({
+    setstate(() => ({
       ...state,
       [state.y]: state.left - state.basicBlockSize,
     }));
@@ -54,7 +55,7 @@ export function PlayingField(props) {
       state.to.spawn = true; /// spawn new composite block
       return;
     }
-    setstate((state) => ({
+    setstate(() => ({
       ...state,
       [state.x]: state.top + state.basicBlockSize,
     }));
@@ -96,7 +97,7 @@ export function PlayingField(props) {
         }px`,
       }}
     >
-      <CompositeBlock blockState={state} />
+      <CompositeBlock defBlockState={state} />
     </div>
   );
 }

@@ -3,31 +3,45 @@ import "./BasicBlock.styles.scss";
 
 export function BasicBlock(props) {
   // console.log(props.compositeBlock);
+  // const toAppend = props.defBlockState.to.append;
+  // useEffect(() => {
+  //   if (toAppend === false) return;
+  //   const playingField = document.querySelector(".playingField");
+  //   const basicBlock = document.querySelectorAll(".basicBlock");
+  //   console.log(basicBlock[0].style);
+
+  //   playingField.append(...basicBlock);
+  //   props.defBlockState.to.append = false;
+  //   return () => (props.defBlockState.blockType = Math.floor(Math.random() * 7));
+  // }, [props.defBlockState, toAppend]);
 
   const handleClick = (e) => {
     e.preventDefault();
     console.log("clicked");
   };
-  let calculatedY = props.compositeBlock.top + props.blockState.top;
-  let calculatedX = props.compositeBlock.left + props.blockState.left;
 
-  props.blockState.isInColision.down = !(
+  let calculatedY = props.compositeBlock.top + props.defBlockState.top;
+  let calculatedX = props.compositeBlock.left + props.defBlockState.left;
+
+  props.defBlockState.isInColision.down = !(
     calculatedY <
-    (props.blockState.playingFieldHeight - 1) * props.blockState.basicBlockSize
+    (props.defBlockState.playingFieldHeight - 1) *
+      props.defBlockState.basicBlockSize
   );
-  props.blockState.isInColision.right = !(
+  props.defBlockState.isInColision.right = !(
     calculatedX <
-    (props.blockState.playingFieldWidth - 1) * props.blockState.basicBlockSize
+    (props.defBlockState.playingFieldWidth - 1) *
+      props.defBlockState.basicBlockSize
   );
-  props.blockState.isInColision.left = !(
-    calculatedX > props.blockState.basicBlockSize
+  props.defBlockState.isInColision.left = !(
+    calculatedX > props.defBlockState.basicBlockSize
   );
 
   const className = `basicBlock__${props.indexkey} basicBlock`;
   const style = {
-    backgroundColor: props.blockState.backgroundColor,
-    height: props.blockState.basicBlockSize,
-    width: props.blockState.basicBlockSize,
+    backgroundColor: props.defBlockState.backgroundColor,
+    height: props.defBlockState.basicBlockSize,
+    width: props.defBlockState.basicBlockSize,
     top: props.compositeBlock.top,
     left: props.compositeBlock.left,
   };
@@ -37,10 +51,9 @@ export function BasicBlock(props) {
       className={className}
       indexkey={props.indexkey}
       style={style}
-      onKeyDown={props.onKeyDown}
       onClick={handleClick}
     >
-      {props.blockState.text}
+      {props.defBlockState.text}
     </div>
   );
 }
