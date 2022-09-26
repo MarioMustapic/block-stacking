@@ -3,6 +3,7 @@
   display: flex;
   background-color: grey;
 }
-.playingField:focus {
+.playingField:focus,
+.playingField.focus {
   background-color: black;
 }

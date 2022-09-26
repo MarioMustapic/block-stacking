@@ -1,12 +1,10 @@
 import "./PlayingField.styles.scss";
-import { useEffect } from "react";
 import { useState } from "react";
 import { CompositeBlock } from "../CompositeBlock/CompositeBlock.component";
-import { useCallback } from "react";
 
-export function PlayingField(props) {
+export function PlayingField() {
   // prettier-ignore
-  const [state, setstate] = useState ({
+  const [state] = useState ({
       top: 0,                       //def value for starting Y-axis position(top)
       left: 0,                      //def value for starting X-axis position(centered)
       rotation: 0,                  //def value for angle of composite block
@@ -36,58 +34,23 @@ export function PlayingField(props) {
       blockType: Math.floor(Math.random() * 7),  //block randomizer
   });
   console.log(state);
-  const moveRight = () => {
-    setstate(() => ({
-      ...state,
-      [state.y]: state.left + state.basicBlockSize,
-    }));
-  };
-  const moveLeft = () => {
-    setstate(() => ({
-      ...state,
-      [state.y]: state.left - state.basicBlockSize,
-    }));
-  };
-  const moveDown = useCallback(() => {
-    if (state.isInColision.down === true) {
-      state.to.append = true; /// move blocks from composite to terrain
-      state.to.destroy = true; /// destroy old, now empty, composite block   ***triggers***
-      state.to.spawn = true; /// spawn new composite block
-      return;
-    }
-    setstate(() => ({
-      ...state,
-      [state.x]: state.top + state.basicBlockSize,
-    }));
-  }, [state]);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      moveDown();
-    }, state.gravityTimer);
-    return () => clearTimeout(timer);
-  }, [moveDown, state.gravityTimer]);
-
-  const handleKeyDown = (e) => {
+  const handleClick = (e) => {
     e.preventDefault();
-    if (e.code === "ArrowDown") return moveDown();
-    else if (e.code === "ArrowRight" && state.isInColision.right === false)
-      return moveRight();
-    else if (e.code === "ArrowLeft" && state.isInColision.left === false)
-      return moveLeft();
-    else if (e.code === "ArrowUp" && state.isInColision.rotation === false) {
-      return setstate((state) => ({
-        ...state,
-        [state.z]: state.rotation + 90,
-      }));
-    }
+    const compositeBlock = document.querySelector(".compositeBlock");
+    const playingField = document.querySelector(".playingField");
+    compositeBlock.focus();
+    playingField.classList.add("focus");
+    compositeBlock.addEventListener("focusout", () =>
+      playingField.classList.remove("focus")
+    );
   };
 
   return (
     <div
       className="playingField"
+      onClick={handleClick}
       tabIndex={0}
-      onKeyDown={handleKeyDown}
       style={{
         width: `${state.basicBlockSize * state.playingFieldWidth}px`,
         height: `${state.basicBlockSize * state.playingFieldHeight}px`,

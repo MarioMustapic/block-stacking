@@ -1,8 +1,10 @@
-// import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./BasicBlock.styles.scss";
 
 export function BasicBlock(props) {
-  // console.log(props.compositeBlock);
+  const [basicBlockState] = useState(props.compositeBlockState);
+
+  // console.log(basicBlockState);
   // const toAppend = props.defBlockState.to.append;
   // useEffect(() => {
   //   if (toAppend === false) return;
@@ -20,30 +22,30 @@ export function BasicBlock(props) {
     console.log("clicked");
   };
 
-  let calculatedY = props.compositeBlock.top + props.defBlockState.top;
-  let calculatedX = props.compositeBlock.left + props.defBlockState.left;
+  let calculatedY = props.compositeBlockState.top + props.compositeBlock.top;
+  let calculatedX =
+    props.compositeBlock.left +
+    Math.floor(basicBlockState.playingFieldWidth / 2);
+
+  console.log(calculatedY, calculatedX);
 
   props.defBlockState.isInColision.down = !(
     calculatedY <
-    (props.defBlockState.playingFieldHeight - 1) *
-      props.defBlockState.basicBlockSize
+    props.defBlockState.playingFieldHeight - 1
   );
   props.defBlockState.isInColision.right = !(
     calculatedX <
-    (props.defBlockState.playingFieldWidth - 1) *
-      props.defBlockState.basicBlockSize
+    props.defBlockState.playingFieldWidth - 1
   );
-  props.defBlockState.isInColision.left = !(
-    calculatedX > props.defBlockState.basicBlockSize
-  );
+  props.defBlockState.isInColision.left = !(calculatedX > 0);
 
   const className = `basicBlock__${props.indexkey} basicBlock`;
   const style = {
-    backgroundColor: props.defBlockState.backgroundColor,
-    height: props.defBlockState.basicBlockSize,
-    width: props.defBlockState.basicBlockSize,
-    top: props.compositeBlock.top,
-    left: props.compositeBlock.left,
+    backgroundColor: basicBlockState.backgroundColor,
+    height: basicBlockState.basicBlockSize,
+    width: basicBlockState.basicBlockSize,
+    top: calculatedY * basicBlockState.basicBlockSize,
+    left: calculatedX * basicBlockState.basicBlockSize,
   };
 
   return (
