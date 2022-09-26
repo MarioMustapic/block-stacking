@@ -7,7 +7,7 @@ export function CompositeBlock(props) {
   const [compositeBlockState, setCompositeBlockState] = useState(
     props.defBlockState
   );
-  console.log(compositeBlockState);
+  console.log(setCompositeBlockState);
 
   const moveRight = () => {
     setCompositeBlockState(() => ({
