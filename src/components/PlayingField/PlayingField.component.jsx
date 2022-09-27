@@ -1,10 +1,11 @@
 import "./PlayingField.styles.scss";
 import { useState } from "react";
 import { CompositeBlock } from "../CompositeBlock/CompositeBlock.component";
+import { useEffect } from "react";
 
 export function PlayingField() {
   // prettier-ignore
-  const [state] = useState ({
+  const [state, setState] = useState ({
       top: 0,                       //def value for starting Y-axis position(top)
       left: 0,                      //def value for starting X-axis position(centered)
       rotation: 0,                  //def value for angle of composite block
@@ -13,27 +14,32 @@ export function PlayingField() {
       z: "rotation",                //proxy for rotatio keyword
       isInColision:                 //def value for colision logic
         {
-          down:false,
-          right:false,
-          left:false,
+          down:[false,false,false,false,],
+          right:[false,false,false,false,],
+          left:[false,false,false,false,],
           rotation:false,
         },
-      to:                           //def value for task
-        {
-          append:false,
-          destroy:false,
-          spawn:true,
-        },
+      toAppend: false,
+      toRenderCompositeBlock: true,
       playingFieldWidth: 24,
       playingFieldHeight: 28,
       text: "",                     //block text (atm no use)
       gravityTimer: 111111,         //timer for downward movment over time  
       basicBlockSize: 20,           //size in pixels
       compositeBlockSize: 5,        //max height or width in number of basicBlocks
-      backgroundColor: "green",     //def background color
+      backgroundColor: "",     //def background color
       blockType: Math.floor(Math.random() * 7),  //block randomizer
   });
-  console.log(state);
+
+  console.log(document.querySelector(".playingField"));
+  useEffect(() => {
+    if (state.toRenderCompositeBlock === false)
+      setState(() => ({
+        ...state,
+        blockType: Math.floor(Math.random() * 7),
+        toRenderCompositeBlock: true,
+      }));
+  }, [state]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -60,7 +66,9 @@ export function PlayingField() {
         }px`,
       }}
     >
-      <CompositeBlock defBlockState={state} />
+      {state.toRenderCompositeBlock && (
+        <CompositeBlock defBlockState={state} setDefBlockState={setState} />
+      )}
     </div>
   );
 }

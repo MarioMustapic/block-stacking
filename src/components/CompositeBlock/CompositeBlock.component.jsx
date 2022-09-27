@@ -7,8 +7,8 @@ export function CompositeBlock(props) {
   const [compositeBlockState, setCompositeBlockState] = useState(
     props.defBlockState
   );
-  console.log(setCompositeBlockState);
 
+  // useEffect(() => {});
   const moveRight = () => {
     setCompositeBlockState(() => ({
       ...compositeBlockState,
@@ -22,12 +22,19 @@ export function CompositeBlock(props) {
     }));
   };
   const moveDown = useCallback(() => {
-    if (compositeBlockState.isInColision.down === true) {
-      compositeBlockState.to.append = true; /// move blocks from composite to terrain
-      compositeBlockState.to.destroy = true; /// destroy old, now empty, composite block   ***triggers***
-      compositeBlockState.to.spawn = true; /// spawn new composite block
+    const collision = compositeBlockState.isInColision.down;
+    let isCollisionTrue = false;
+    isCollisionTrue =
+      collision[0] === true || //cheking if any block is in colision down
+      collision[1] === true ||
+      collision[2] === true ||
+      collision[3] === true;
+
+    if (isCollisionTrue === true) {
+      compositeBlockState.toAppend = true; /// move blocks from composite to terrain
       return;
     }
+
     setCompositeBlockState(() => ({
       ...compositeBlockState,
       [compositeBlockState.x]: compositeBlockState.top + 1,
@@ -43,16 +50,24 @@ export function CompositeBlock(props) {
 
   const handleKeyDown = (e) => {
     e.preventDefault();
+    const collisionLeft = compositeBlockState.isInColision.left;
+    let isCollisionLeftTrue = false;
+    isCollisionLeftTrue =
+      collisionLeft[0] === true || //cheking if any block is in colision left
+      collisionLeft[1] === true ||
+      collisionLeft[2] === true ||
+      collisionLeft[3] === true;
+    const collisionRight = compositeBlockState.isInColision.right;
+    let isCollisionRightTrue = false;
+    isCollisionRightTrue =
+      collisionRight[0] === true || //cheking if any block is in colision right
+      collisionRight[1] === true ||
+      collisionRight[2] === true ||
+      collisionRight[3] === true;
     if (e.code === "ArrowDown") return moveDown();
-    else if (
-      e.code === "ArrowRight" &&
-      compositeBlockState.isInColision.right === false
-    )
+    else if (e.code === "ArrowRight" && isCollisionRightTrue === false)
       return moveRight();
-    else if (
-      e.code === "ArrowLeft" &&
-      compositeBlockState.isInColision.left === false
-    )
+    else if (e.code === "ArrowLeft" && isCollisionLeftTrue === false)
       return moveLeft();
     else if (
       e.code === "ArrowUp" &&
@@ -64,61 +79,57 @@ export function CompositeBlock(props) {
       }));
     }
   };
-
-  const toAppend = compositeBlockState.to.append;
+  const toAppend = compositeBlockState.toAppend;
   useEffect(() => {
     if (toAppend === false) return;
+    console.log("append");
     const playingField = document.querySelector(".playingField");
-    const basicBlocks = document.querySelectorAll(".playingField .basicBlock");
-    for (let i = 0; i < basicBlocks.length; i++) {
-      basicBlocks[i].style.height = 50;
-    }
+    const basicBlocks = document.querySelectorAll(
+      ".compositeBlock .basicBlock"
+    );
     playingField.append(...basicBlocks);
-    compositeBlockState.to.append = false;
-    return () =>
-      (compositeBlockState.blockType = Math.floor(Math.random() * 7));
-  }, [compositeBlockState, toAppend]);
-
-  const style = {
-    top: compositeBlockState.top * compositeBlockState.basicBlockSize,
-    left: compositeBlockState.left * compositeBlockState.basicBlockSize,
-    height:
-      compositeBlockState.basicBlockSize *
-      compositeBlockState.compositeBlockSize,
-    width:
-      compositeBlockState.basicBlockSize *
-      compositeBlockState.compositeBlockSize,
-    transform: `rotate(${compositeBlockState.rotation}deg)`,
-  };
+    compositeBlockState.toAppend = false;
+    props.setDefBlockState(() => ({
+      ...props.defBlockState,
+      toRenderCompositeBlock: false,
+    })); /// destroy old, now empty, composite block
+    // return () =>
+    //   (compositeBlockState.blockType = Math.floor(Math.random() * 7));
+  }, [compositeBlockState, props, toAppend]);
 
   const compositeBlockList = [
-    [[1, 1, 1, 1], [0, 1, 2, 3], "I-block"],
-    [[1, 2, 1, 2], [0, 0, 1, 1], "O-block"],
-    [[1, 1, 1, 2], [0, 1, 2, 2], "L-Block"],
-    [[1, 1, 1, 0], [0, 1, 2, 2], "J-block"],
-    [[1, 0, 1, 2], [0, 1, 1, 1], "T-block"],
-    [[0, 1, 1, 2], [0, 0, 1, 1], "Z-block"],
-    [[2, 1, 1, 0], [0, 0, 1, 1], "S-block"],
+    [[1, 1, 1, 1], [0, 1, 2, 3], "red", "I-block"],
+    [[1, 2, 1, 2], [0, 0, 1, 1], "yellow", "O-block"],
+    [[1, 1, 1, 2], [0, 1, 2, 2], "blue", "L-Block"],
+    [[1, 1, 1, 0], [0, 1, 2, 2], "orange", "J-block"],
+    [[1, 0, 1, 2], [0, 1, 1, 1], "green", "T-block"],
+    [[0, 1, 1, 2], [0, 0, 1, 1], "teal", "Z-block"],
+    [[2, 1, 1, 0], [0, 0, 1, 1], "pink", "S-block"],
   ];
   const offSetX = compositeBlockList[props.defBlockState.blockType][0];
   const offSetY = compositeBlockList[props.defBlockState.blockType][1];
+  const blockColor = compositeBlockList[props.defBlockState.blockType][2];
   const compositeBlockRecipe = {
     recipe: [
       {
         top: offSetY[0],
         left: offSetX[0],
+        backgroundColor: blockColor,
       },
       {
         top: offSetY[1],
         left: offSetX[1],
+        backgroundColor: blockColor,
       },
       {
         top: offSetY[2],
         left: offSetX[2],
+        backgroundColor: blockColor,
       },
       {
         top: offSetY[3],
         left: offSetX[3],
+        backgroundColor: blockColor,
       },
     ],
   };
@@ -134,16 +145,26 @@ export function CompositeBlock(props) {
     )
   );
 
+  const style = {
+    top: 0,
+    left: 0,
+    height:
+      compositeBlockState.basicBlockSize *
+      compositeBlockState.compositeBlockSize,
+    width:
+      compositeBlockState.basicBlockSize *
+      compositeBlockState.compositeBlockSize,
+    transform: `rotate(${compositeBlockState.rotation}deg)`,
+  };
+
   return (
-    <div className="compositeBlockCentering">
-      <div
-        className="compositeBlock"
-        style={style}
-        onKeyDown={handleKeyDown}
-        tabIndex={0}
-      >
-        {basicBlocks}
-      </div>
+    <div
+      className="compositeBlock"
+      style={style}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+    >
+      {basicBlocks}
     </div>
   );
 }
