@@ -8,7 +8,15 @@ export function CompositeBlock(props) {
     props.defBlockState
   );
 
-  // useEffect(() => {});
+  useEffect(() => {
+    const compositeBlock = document.querySelector(".compositeBlock");
+    const playingField = document.querySelector(".playingField");
+    compositeBlock.focus();
+    playingField.classList.add("focus");
+    compositeBlock.addEventListener("focusout", () =>
+      playingField.classList.remove("focus")
+    );
+  }, []);
   const moveRight = () => {
     setCompositeBlockState(() => ({
       ...compositeBlockState,
@@ -31,7 +39,11 @@ export function CompositeBlock(props) {
       collision[3] === true;
 
     if (isCollisionTrue === true) {
-      compositeBlockState.toAppend = true; /// move blocks from composite to terrain
+      // move blocks from composite to terrain
+      setCompositeBlockState(() => ({
+        ...compositeBlockState,
+        toAppend: true,
+      }));
       return;
     }
 
@@ -82,12 +94,15 @@ export function CompositeBlock(props) {
   const toAppend = compositeBlockState.toAppend;
   useEffect(() => {
     if (toAppend === false) return;
-    console.log("append");
     const playingField = document.querySelector(".playingField");
     const basicBlocks = document.querySelectorAll(
       ".compositeBlock .basicBlock"
     );
     playingField.append(...basicBlocks);
+    setCompositeBlockState(() => ({
+      ...compositeBlockState,
+      toAppend: false,
+    }));
     compositeBlockState.toAppend = false;
     props.setDefBlockState(() => ({
       ...props.defBlockState,

@@ -31,7 +31,6 @@ export function PlayingField() {
       blockType: Math.floor(Math.random() * 7),  //block randomizer
   });
 
-  console.log(document.querySelector(".playingField"));
   useEffect(() => {
     if (state.toRenderCompositeBlock === false)
       setState(() => ({
