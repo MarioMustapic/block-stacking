@@ -32,7 +32,6 @@ export function PlayingField() {
   });
   const [playingFieldBlocksCords, updatePlayingFieldBlocksCords] = useState([]);
 
-  console.log(playingFieldBlocksCords);
   useEffect(() => {
     if (state.toRenderCompositeBlock === false)
       setState(() => ({

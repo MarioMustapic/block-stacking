@@ -16,12 +16,6 @@ export function BasicBlock(props) {
     props.compositeBlock.left +
     Math.floor(basicBlockState.playingFieldWidth / 2);
 
-  // props.updatePlayingFieldBlocksCords(() => ({
-  //   ...props.playingFieldBlocksCords.blocks,
-  //   top:calculatedX,
-  //   left: calculatedY
-  // }));
-
   useEffect(() => {
     let sendCord = true;
     if (sendCord === true && props.compositeBlockState.toAppend === true) {
@@ -33,17 +27,38 @@ export function BasicBlock(props) {
     }
   }, [calculatedX, calculatedY, props]);
 
-  props.compositeBlockState.isInColision.down[props.indexkey] = !(
-    (calculatedY < props.defBlockState.playingFieldHeight - 1) //if it is out of bounds down
-  ); //&& blockCollisionDown;
+  let blockCollisionDown = false;
+  let isInColisionDown = props.playingFieldBlocksCords.filter(
+    //filters blocks with same cordinates if we move down one block
+    (e) => e.left === calculatedX && e.top === calculatedY + 1
+  );
+  if (isInColisionDown.length > 0) blockCollisionDown = true;
+  props.compositeBlockState.isInColision.down[props.indexkey] =
+    !(
+      (calculatedY < props.defBlockState.playingFieldHeight - 1) //if it is out of bounds down
+    ) || blockCollisionDown;
 
-  props.compositeBlockState.isInColision.right[props.indexkey] = !(
-    (calculatedX < props.defBlockState.playingFieldWidth - 1) //if it is out of bounds right
-  ); //&& blockCollisionDown;
+  let blockCollisionLeft = false;
+  let isInColisionLeft = props.playingFieldBlocksCords.filter(
+    //filters blocks with same cordinates if we move left one block
+    (e) => e.left === calculatedX - 1 && e.top === calculatedY
+  );
+  if (isInColisionLeft.length > 0) blockCollisionLeft = true;
+  props.compositeBlockState.isInColision.left[props.indexkey] =
+    !(
+      (calculatedX > 0) //if it is out of bounds left
+    ) || blockCollisionLeft;
 
-  props.compositeBlockState.isInColision.left[props.indexkey] = !(
-    (calculatedX > 0) //if it is out of bounds left
-  ); //&& blockCollisionDown;
+  let blockCollisionRight = false;
+  let isInColisionRight = props.playingFieldBlocksCords.filter(
+    //filters blocks with same cordinates if we move right one block
+    (e) => e.left === calculatedX + 1 && e.top === calculatedY
+  );
+  if (isInColisionRight.length > 0) blockCollisionRight = true;
+  props.compositeBlockState.isInColision.right[props.indexkey] =
+    !(
+      (calculatedX < props.defBlockState.playingFieldWidth - 1) //if it is out of bounds right
+    ) || blockCollisionRight;
 
   const className = `basicBlock__${props.indexkey} basicBlock`;
   const style = {
