@@ -24,13 +24,15 @@ export function PlayingField() {
       playingFieldWidth: 24,
       playingFieldHeight: 28,
       text: "",                     //block text (atm no use)
-      gravityTimer: 111111,         //timer for downward movment over time  
+      gravityTimer: 1000,         //timer for downward movment over time  
       basicBlockSize: 20,           //size in pixels
       compositeBlockSize: 5,        //max height or width in number of basicBlocks
       backgroundColor: "",     //def background color
       blockType: Math.floor(Math.random() * 7),  //block randomizer
   });
+  const [playingFieldBlocksCords, updatePlayingFieldBlocksCords] = useState([]);
 
+  console.log(playingFieldBlocksCords);
   useEffect(() => {
     if (state.toRenderCompositeBlock === false)
       setState(() => ({
@@ -66,7 +68,12 @@ export function PlayingField() {
       }}
     >
       {state.toRenderCompositeBlock && (
-        <CompositeBlock defBlockState={state} setDefBlockState={setState} />
+        <CompositeBlock
+          defBlockState={state}
+          setDefBlockState={setState}
+          playingFieldBlocksCords={playingFieldBlocksCords}
+          updatePlayingFieldBlocksCords={updatePlayingFieldBlocksCords}
+        />
       )}
     </div>
   );

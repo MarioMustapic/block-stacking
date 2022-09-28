@@ -98,6 +98,7 @@ export function CompositeBlock(props) {
     const basicBlocks = document.querySelectorAll(
       ".compositeBlock .basicBlock"
     );
+
     playingField.append(...basicBlocks);
     setCompositeBlockState(() => ({
       ...compositeBlockState,
@@ -108,8 +109,6 @@ export function CompositeBlock(props) {
       ...props.defBlockState,
       toRenderCompositeBlock: false,
     })); /// destroy old, now empty, composite block
-    // return () =>
-    //   (compositeBlockState.blockType = Math.floor(Math.random() * 7));
   }, [compositeBlockState, props, toAppend]);
 
   const compositeBlockList = [
@@ -156,6 +155,8 @@ export function CompositeBlock(props) {
         defBlockState={props.defBlockState}
         compositeBlock={compositeBlock}
         compositeBlockState={compositeBlockState}
+        playingFieldBlocksCords={props.playingFieldBlocksCords}
+        updatePlayingFieldBlocksCords={props.updatePlayingFieldBlocksCords}
       />
     )
   );
