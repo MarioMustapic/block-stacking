@@ -9,6 +9,7 @@ export function CompositeBlock(props) {
   );
 
   useEffect(() => {
+    //set focus on composite block so it can get keyboard inputs
     const compositeBlock = document.querySelector(".compositeBlock");
     const playingField = document.querySelector(".playingField");
     compositeBlock.focus();
@@ -17,6 +18,7 @@ export function CompositeBlock(props) {
       playingField.classList.remove("focus")
     );
   }, []);
+
   const moveRight = () => {
     setCompositeBlockState(() => ({
       ...compositeBlockState,
@@ -46,19 +48,14 @@ export function CompositeBlock(props) {
       }));
       return;
     }
-
     setCompositeBlockState(() => ({
       ...compositeBlockState,
       [compositeBlockState.x]: compositeBlockState.top + 1,
     }));
   }, [compositeBlockState]);
-
   useEffect(() => {
-    const timer = setInterval(() => {
-      moveDown();
-    }, compositeBlockState.gravityTimer);
-    return () => clearTimeout(timer);
-  }, [moveDown, compositeBlockState.gravityTimer]);
+    if (props.gravityTick !== 0) moveDown();
+  }, [props.gravityTick]);
 
   const handleKeyDown = (e) => {
     e.preventDefault();
@@ -81,17 +78,19 @@ export function CompositeBlock(props) {
       return moveRight();
     else if (e.code === "ArrowLeft" && isCollisionLeftTrue === false)
       return moveLeft();
-    else if (
-      e.code === "ArrowUp" &&
-      compositeBlockState.isInColision.rotation === false
-    ) {
-      return setCompositeBlockState((compositeBlockState) => ({
-        ...compositeBlockState,
-        [compositeBlockState.z]: compositeBlockState.rotation + 90,
-      }));
-    }
+    // else if (
+    //   e.code === "ArrowUp" // &&
+    //   // compositeBlockState.isInColision.rotation === false
+    // ) {
+    //   return setCompositeBlockState((compositeBlockState) => ({
+    //     ...compositeBlockState,
+    //     [compositeBlockState.z]: compositeBlockState.rotation + 90,
+    //   }));
+    // }
   };
+
   const toAppend = compositeBlockState.toAppend;
+
   useEffect(() => {
     if (toAppend === false) return;
     const playingField = document.querySelector(".playingField");
@@ -170,7 +169,6 @@ export function CompositeBlock(props) {
     width:
       compositeBlockState.basicBlockSize *
       compositeBlockState.compositeBlockSize,
-    transform: `rotate(${compositeBlockState.rotation}deg)`,
   };
 
   return (

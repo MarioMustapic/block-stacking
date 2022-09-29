@@ -17,20 +17,21 @@ export function PlayingField() {
           down:[false,false,false,false,],
           right:[false,false,false,false,],
           left:[false,false,false,false,],
-          rotation:false,
+          rotation:[false,false,false,false,],
         },
       toAppend: false,
       toRenderCompositeBlock: true,
       playingFieldWidth: 24,
       playingFieldHeight: 28,
       text: "",                     //block text (atm no use)
-      gravityTimer: 1000,         //timer for downward movment over time  
+      gravityTimer: 5000,         //timer for downward movment over time
       basicBlockSize: 20,           //size in pixels
       compositeBlockSize: 5,        //max height or width in number of basicBlocks
-      backgroundColor: "",     //def background color
+      backgroundColor: "",          //def background color
       blockType: Math.floor(Math.random() * 7),  //block randomizer
   });
   const [playingFieldBlocksCords, updatePlayingFieldBlocksCords] = useState([]);
+  const [gravityTick, setGravityTick] = useState(0);
 
   useEffect(() => {
     if (state.toRenderCompositeBlock === false)
@@ -39,8 +40,18 @@ export function PlayingField() {
         blockType: Math.floor(Math.random() * 7),
         toRenderCompositeBlock: true,
       }));
+    setGravityTick(0);
   }, [state]);
 
+  useEffect(() => {
+    // "gravity" timer, make blocks move down on interval
+    const timer = setInterval(() => {
+      setGravityTick((gravityTick) => gravityTick + 1);
+    }, state.gravityTimer);
+    return () => clearTimeout(timer);
+  }, [state.gravityTimer]);
+
+  console.log(gravityTick);
   const handleClick = (e) => {
     e.preventDefault();
     const compositeBlock = document.querySelector(".compositeBlock");
@@ -72,6 +83,8 @@ export function PlayingField() {
           setDefBlockState={setState}
           playingFieldBlocksCords={playingFieldBlocksCords}
           updatePlayingFieldBlocksCords={updatePlayingFieldBlocksCords}
+          gravityTick={gravityTick}
+          setGravityTick={setGravityTick}
         />
       )}
     </div>
