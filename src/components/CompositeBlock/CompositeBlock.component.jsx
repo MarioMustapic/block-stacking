@@ -154,6 +154,7 @@ export function CompositeBlock(props) {
         defBlockState={props.defBlockState}
         compositeBlock={compositeBlock}
         compositeBlockState={compositeBlockState}
+        setCompositeBlockState={setCompositeBlockState}
         playingFieldBlocksCords={props.playingFieldBlocksCords}
         updatePlayingFieldBlocksCords={props.updatePlayingFieldBlocksCords}
       />

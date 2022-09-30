@@ -33,6 +33,15 @@ export function BasicBlock(props) {
     (e) => e.left === calculatedX && e.top === calculatedY + 1
   );
   if (isInColisionDown.length > 0) blockCollisionDown = true;
+  let gameOverTrigger = props.playingFieldBlocksCords.filter(
+    //filters blocks with same cordinates (should only hapen when block spawns inside other existing blocks)
+    (e) => e.left === calculatedX && e.top === calculatedY
+  );
+  if (gameOverTrigger.length > 0) {
+    props.updatePlayingFieldBlocksCords([]);
+    document.querySelectorAll(".basicBlock").forEach((e) => e.remove());
+  }
+
   props.compositeBlockState.isInColision.down[props.indexkey] =
     !(
       (calculatedY < props.defBlockState.playingFieldHeight - 1) //if it is out of bounds down

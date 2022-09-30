@@ -29,6 +29,7 @@ export function PlayingField() {
       compositeBlockSize: 5,        //max height or width in number of basicBlocks
       backgroundColor: "",          //def background color
       blockType: Math.floor(Math.random() * 7),  //block randomizer
+      gameOver: false,              //if true, start over
   });
   const [playingFieldBlocksCords, updatePlayingFieldBlocksCords] = useState([]);
   const [gravityTick, setGravityTick] = useState(0);
@@ -51,7 +52,6 @@ export function PlayingField() {
     return () => clearTimeout(timer);
   }, [state.gravityTimer]);
 
-  console.log(gravityTick);
   const handleClick = (e) => {
     e.preventDefault();
     const compositeBlock = document.querySelector(".compositeBlock");
