@@ -42,20 +42,20 @@ export function CompositeBlock(props) {
 
     if (isCollisionTrue === true) {
       // move blocks from composite to terrain
-      setCompositeBlockState(() => ({
-        ...compositeBlockState,
+      setCompositeBlockState((state) => ({
+        ...state,
         toAppend: true,
       }));
       return;
     }
-    setCompositeBlockState(() => ({
-      ...compositeBlockState,
-      [compositeBlockState.x]: compositeBlockState.top + 1,
+    setCompositeBlockState((state) => ({
+      ...state,
+      top: compositeBlockState.top + 1,
     }));
-  }, [compositeBlockState]);
+  }, [compositeBlockState.top, compositeBlockState.isInColision.down]);
   useEffect(() => {
     if (props.gravityTick !== 0) moveDown();
-  }, [props.gravityTick]);
+  }, [props.gravityTick, moveDown]);
 
   const handleKeyDown = (e) => {
     e.preventDefault();
