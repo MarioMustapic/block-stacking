@@ -54,9 +54,17 @@ export function CompositeBlock(props) {
     }));
   }, [compositeBlockState.top, compositeBlockState.isInColision.down]);
   useEffect(() => {
-    if (props.gravityTick !== 0) moveDown();
-  }, [props.gravityTick, moveDown]);
-
+    if (props.gravityTick !== 0) {
+      let abc = document.querySelector(".compositeBlock");
+      abc.dispatchEvent(new Event("dropDown"));
+    }
+  }, [props.gravityTick]);
+  useEffect(() => {
+    const compositeBlock = document.querySelector(".compositeBlock");
+    compositeBlock.addEventListener("dropDown", (e) => {
+      moveDown();
+    });
+  });
   const handleKeyDown = (e) => {
     e.preventDefault();
     const collisionLeft = compositeBlockState.isInColision.left;
