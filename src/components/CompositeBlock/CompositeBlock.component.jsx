@@ -65,6 +65,12 @@ export function CompositeBlock(props) {
       moveDown();
     });
   });
+  const rotate = () => {
+    setCompositeBlockState((state) => ({
+      ...state,
+      rotation: compositeBlockState.rotation + 1,
+    }));
+  };
 
   const handleKeyDown = (e) => {
     e.preventDefault();
@@ -87,15 +93,12 @@ export function CompositeBlock(props) {
       return moveRight();
     else if (e.code === "ArrowLeft" && isCollisionLeftTrue === false)
       return moveLeft();
-    // else if (
-    //   e.code === "ArrowUp" // &&
-    //   // compositeBlockState.isInColision.rotation === false
-    // ) {
-    //   return setCompositeBlockState((compositeBlockState) => ({
-    //     ...compositeBlockState,
-    //     [compositeBlockState.z]: compositeBlockState.rotation + 90,
-    //   }));
-    // }
+    else if (
+      e.code === "ArrowUp" // &&
+      // compositeBlockState.isInColision.rotation === false
+    ) {
+      return rotate();
+    }
   };
 
   useEffect(() => {
@@ -126,30 +129,40 @@ export function CompositeBlock(props) {
     [[1, 1, 0, 2], [1, 0, 0, 1], "teal", "unEvenLength", "Z-block"],
     [[1, 1, 2, 0], [1, 0, 0, 1], "pink", "unEvenLength", "S-block"],
   ];
-  const offSetX = compositeBlockList[props.defBlockState.blockType][0];
-  const offSetY = compositeBlockList[props.defBlockState.blockType][1];
+  const offsetX = compositeBlockList[props.defBlockState.blockType][0];
+  const offsetY = compositeBlockList[props.defBlockState.blockType][1];
   const blockColor = compositeBlockList[props.defBlockState.blockType][2];
+  const length = compositeBlockList[props.defBlockState.blockType][3];
+  const name = compositeBlockList[props.defBlockState.blockType][4];
   const compositeBlockRecipe = {
     recipe: [
       {
-        top: offSetY[0],
-        left: offSetX[0],
-        backgroundColor: blockColor,
+        y: offsetY[0],
+        x: offsetX[0],
+        blockColor,
+        length,
+        name,
       },
       {
-        top: offSetY[1],
-        left: offSetX[1],
-        backgroundColor: blockColor,
+        y: offsetY[1],
+        x: offsetX[1],
+        blockColor,
+        length,
+        name,
       },
       {
-        top: offSetY[2],
-        left: offSetX[2],
-        backgroundColor: blockColor,
+        y: offsetY[2],
+        x: offsetX[2],
+        blockColor,
+        length,
+        name,
       },
       {
-        top: offSetY[3],
-        left: offSetX[3],
-        backgroundColor: blockColor,
+        y: offsetY[3],
+        x: offsetX[3],
+        blockColor,
+        length,
+        name,
       },
     ],
   };

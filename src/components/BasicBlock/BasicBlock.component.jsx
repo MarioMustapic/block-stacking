@@ -1,19 +1,99 @@
 import { useEffect } from "react";
+import { useCallback } from "react";
 import { useState } from "react";
 import "./BasicBlock.styles.scss";
 
 export function BasicBlock(props) {
   const [basicBlockState] = useState(props.compositeBlockState);
-
+  // const [rotationOffset, setCompositeBlockOffset] = useState({ x: 0, y: 0 });
+  const [compositeBlockOffset, setCompositeBlockOffset] = useState({
+    x: props.compositeBlock.x,
+    y: props.compositeBlock.y,
+  });
   const handleClick = (e) => {
     e.preventDefault();
     console.log("clicked");
   };
 
-  let calculatedY = props.compositeBlockState.top + props.compositeBlock.top;
+  let x = compositeBlockOffset.x;
+  let y = compositeBlockOffset.y;
+  console.log({ x, y, c: props.indexkey });
+  const rotation = useCallback(() => {
+    if (
+      /// droping compositeBlocks without block as center of rotation
+      props.compositeBlock.length !== "unEvenLength" ||
+      props.compositeBlockState.rotation % 4 === 0 //4th rotation is same as starting position so we start over
+    )
+      return;
+    else if (props.compositeBlockState.rotation % 4 !== 0) {
+      switch (x) {
+        case 0:
+          switch (y) {
+            case 0:
+              setCompositeBlockOffset({ x: 2, y: 0 });
+              break;
+            case 1:
+              setCompositeBlockOffset({ x: 1, y: 0 });
+              break;
+            case 2:
+              setCompositeBlockOffset({ x: 0, y: 0 });
+              break;
+            default:
+              console.log("something broke", y);
+          }
+          break;
+        case 1:
+          switch (y) {
+            case 0:
+              setCompositeBlockOffset({ x: 2, y: 1 });
+              break;
+            case 1:
+              setCompositeBlockOffset({ x: 1, y: 1 });
+              break;
+            case 2:
+              setCompositeBlockOffset({ x: 0, y: 1 });
+              break;
+            default:
+              console.log("something broke", y);
+          }
+          break;
+        case 2:
+          switch (y) {
+            case 0:
+              setCompositeBlockOffset({ x: 2, y: 2 });
+              break;
+            case 1:
+              setCompositeBlockOffset({ x: 1, y: 2 });
+              break;
+            case 2:
+              setCompositeBlockOffset({ x: 0, y: 2 });
+              break;
+            default:
+              console.log("something broke", y);
+          }
+          break;
+        default:
+          console.log("something broke", x);
+      }
+    }
+  }, [props.compositeBlockState.rotation, props.compositeBlock.length, x, y]);
+  useEffect(() => {
+    if (props.compositeBlockState.rotation !== 0) {
+      let abc = document.querySelector(".basicBlock");
+      abc.dispatchEvent(new Event("rotate"));
+    }
+  }, [props.compositeBlockState.rotation]);
+  useEffect(() => {
+    const compositeBlock = document.querySelector(".basicBlock");
+    compositeBlock.addEventListener("rotate", (e) => {
+      rotation();
+    });
+  });
+
+  let calculatedY = props.compositeBlockState.top + compositeBlockOffset.y;
   let calculatedX =
     props.compositeBlockState.left +
-    props.compositeBlock.left +
+    compositeBlockOffset.x +
     Math.floor(basicBlockState.playingFieldWidth / 2);
 
   useEffect(() => {
@@ -71,7 +151,7 @@ export function BasicBlock(props) {
 
   const className = `basicBlock__${props.indexkey} basicBlock`;
   const style = {
-    backgroundColor: props.compositeBlock.backgroundColor,
+    backgroundColor: props.compositeBlock.blockColor,
     height: basicBlockState.basicBlockSize,
     width: basicBlockState.basicBlockSize,
     top: calculatedY * basicBlockState.basicBlockSize,
