@@ -9,9 +9,6 @@ export function PlayingField() {
       top: 0,                       //def value for starting Y-axis position(top)
       left: 0,                      //def value for starting X-axis position(centered)
       rotation: 0,                  //def value for angle of composite block
-      x: "top",                     //proxy for top keyword
-      y: "left",                    //proxy for left keyword
-      z: "rotation",                //proxy for rotatio keyword
       isInColision:                 //def value for colision logic
         {
           down:[false,false,false,false,],

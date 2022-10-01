@@ -20,15 +20,15 @@ export function CompositeBlock(props) {
   }, []);
 
   const moveRight = () => {
-    setCompositeBlockState(() => ({
-      ...compositeBlockState,
-      [compositeBlockState.y]: compositeBlockState.left + 1,
+    setCompositeBlockState((state) => ({
+      ...state,
+      left: compositeBlockState.left + 1,
     }));
   };
   const moveLeft = () => {
-    setCompositeBlockState(() => ({
-      ...compositeBlockState,
-      [compositeBlockState.y]: compositeBlockState.left - 1,
+    setCompositeBlockState((state) => ({
+      ...state,
+      left: compositeBlockState.left - 1,
     }));
   };
   const moveDown = useCallback(() => {
@@ -65,6 +65,7 @@ export function CompositeBlock(props) {
       moveDown();
     });
   });
+
   const handleKeyDown = (e) => {
     e.preventDefault();
     const collisionLeft = compositeBlockState.isInColision.left;
@@ -97,35 +98,33 @@ export function CompositeBlock(props) {
     // }
   };
 
-  const toAppend = compositeBlockState.toAppend;
-
   useEffect(() => {
+    const toAppend = compositeBlockState.toAppend;
     if (toAppend === false) return;
     const playingField = document.querySelector(".playingField");
     const basicBlocks = document.querySelectorAll(
       ".compositeBlock .basicBlock"
     );
-
     playingField.append(...basicBlocks);
-    setCompositeBlockState(() => ({
-      ...compositeBlockState,
+    setCompositeBlockState((state) => ({
+      ...state,
       toAppend: false,
     }));
     compositeBlockState.toAppend = false;
-    props.setDefBlockState(() => ({
-      ...props.defBlockState,
+    props.setDefBlockState((state) => ({
+      ...state,
       toRenderCompositeBlock: false,
     })); /// destroy old, now empty, composite block
-  }, [compositeBlockState, props, toAppend]);
+  }, [compositeBlockState, props]);
 
   const compositeBlockList = [
-    [[1, 1, 1, 1], [0, 1, 2, 3], "red", "I-block"],
-    [[1, 2, 1, 2], [0, 0, 1, 1], "yellow", "O-block"],
-    [[1, 1, 1, 2], [0, 1, 2, 2], "blue", "L-Block"],
-    [[1, 1, 1, 0], [0, 1, 2, 2], "orange", "J-block"],
-    [[1, 0, 1, 2], [0, 1, 1, 1], "green", "T-block"],
-    [[0, 1, 1, 2], [0, 0, 1, 1], "teal", "Z-block"],
-    [[2, 1, 1, 0], [0, 0, 1, 1], "pink", "S-block"],
+    [[1, 1, 1, 1], [0, 1, 2, 3], "red", "evenLength", "I-block"],
+    [[1, 2, 1, 2], [0, 0, 1, 1], "yellow", "evenLength", "O-block"],
+    [[1, 1, 1, 2], [1, 0, 2, 2], "blue", "unEvenLength", "L-Block"],
+    [[1, 1, 1, 0], [1, 0, 2, 2], "orange", "unEvenLength", "J-block"],
+    [[1, 0, 1, 2], [1, 1, 0, 1], "green", "unEvenLength", "T-block"],
+    [[1, 1, 0, 2], [1, 0, 0, 1], "teal", "unEvenLength", "Z-block"],
+    [[1, 1, 2, 0], [1, 0, 0, 1], "pink", "unEvenLength", "S-block"],
   ];
   const offSetX = compositeBlockList[props.defBlockState.blockType][0];
   const offSetY = compositeBlockList[props.defBlockState.blockType][1];
