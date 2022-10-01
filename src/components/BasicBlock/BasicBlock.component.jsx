@@ -73,7 +73,7 @@ export function BasicBlock(props) {
       default:
         console.log("something broke", x);
     }
-  }, [props.compositeBlockState.rotation, props.compositeBlock.length, x, y]);
+  }, [props.compositeBlock.length, x, y]);
   useEffect(() => {
     if (props.compositeBlockState.rotation !== 0) {
       let abc = document.querySelector(`.basicBlock__${props.indexkey}`);
