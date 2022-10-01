@@ -17,74 +17,73 @@ export function BasicBlock(props) {
 
   let x = compositeBlockOffset.x;
   let y = compositeBlockOffset.y;
-  console.log({ x, y, c: props.indexkey });
   const rotation = useCallback(() => {
     if (
       /// droping compositeBlocks without block as center of rotation
-      props.compositeBlock.length !== "unEvenLength" ||
-      props.compositeBlockState.rotation % 4 === 0 //4th rotation is same as starting position so we start over
+      props.compositeBlock.length !== "unEvenLength"
     )
       return;
-    else if (props.compositeBlockState.rotation % 4 !== 0) {
-      switch (x) {
-        case 0:
-          switch (y) {
-            case 0:
-              setCompositeBlockOffset({ x: 2, y: 0 });
-              break;
-            case 1:
-              setCompositeBlockOffset({ x: 1, y: 0 });
-              break;
-            case 2:
-              setCompositeBlockOffset({ x: 0, y: 0 });
-              break;
-            default:
-              console.log("something broke", y);
-          }
-          break;
-        case 1:
-          switch (y) {
-            case 0:
-              setCompositeBlockOffset({ x: 2, y: 1 });
-              break;
-            case 1:
-              setCompositeBlockOffset({ x: 1, y: 1 });
-              break;
-            case 2:
-              setCompositeBlockOffset({ x: 0, y: 1 });
-              break;
-            default:
-              console.log("something broke", y);
-          }
-          break;
-        case 2:
-          switch (y) {
-            case 0:
-              setCompositeBlockOffset({ x: 2, y: 2 });
-              break;
-            case 1:
-              setCompositeBlockOffset({ x: 1, y: 2 });
-              break;
-            case 2:
-              setCompositeBlockOffset({ x: 0, y: 2 });
-              break;
-            default:
-              console.log("something broke", y);
-          }
-          break;
-        default:
-          console.log("something broke", x);
-      }
+    // else if (props.compositeBlockState.rotation !== 0) {
+    switch (x) {
+      case 0:
+        switch (y) {
+          case 0:
+            setCompositeBlockOffset({ x: 2, y: 0 });
+            break;
+          case 1:
+            setCompositeBlockOffset({ x: 1, y: 0 });
+            break;
+          case 2:
+            setCompositeBlockOffset({ x: 0, y: 0 });
+            break;
+          default:
+            console.log("something broke", y);
+        }
+        break;
+      case 1:
+        switch (y) {
+          case 0:
+            setCompositeBlockOffset({ x: 2, y: 1 });
+            break;
+          case 1:
+            setCompositeBlockOffset({ x: 1, y: 1 });
+            break;
+          case 2:
+            setCompositeBlockOffset({ x: 0, y: 1 });
+            break;
+          default:
+            console.log("something broke", y);
+        }
+        break;
+      case 2:
+        switch (y) {
+          case 0:
+            setCompositeBlockOffset({ x: 2, y: 2 });
+            break;
+          case 1:
+            setCompositeBlockOffset({ x: 1, y: 2 });
+            break;
+          case 2:
+            setCompositeBlockOffset({ x: 0, y: 2 });
+            break;
+          default:
+            console.log("something broke", y);
+        }
+        break;
+      default:
+        console.log("something broke", x);
     }
   }, [props.compositeBlockState.rotation, props.compositeBlock.length, x, y]);
   useEffect(() => {
     if (props.compositeBlockState.rotation !== 0) {
-      let abc = document.querySelector(".basicBlock");
+      let abc = document.querySelector(`.basicBlock__${props.indexkey}`);
       abc.dispatchEvent(new Event("rotate"));
     }
-  }, [props.compositeBlockState.rotation]);
+  }, [props.compositeBlockState.rotation, props.indexkey]);
   useEffect(() => {
-    const compositeBlock = document.querySelector(".basicBlock");
+    const compositeBlock = document.querySelector(
+      `.basicBlock__${props.indexkey}`
+    );
     compositeBlock.addEventListener("rotate", (e) => {
       rotation();
     });
