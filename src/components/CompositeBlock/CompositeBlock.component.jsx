@@ -61,7 +61,7 @@ export function CompositeBlock(props) {
   }, [props.gravityTick]);
   useEffect(() => {
     const compositeBlock = document.querySelector(".compositeBlock");
-    compositeBlock.addEventListener("dropDown", (e) => {
+    compositeBlock.addEventListener("dropDown", () => {
       moveDown();
     });
   });
