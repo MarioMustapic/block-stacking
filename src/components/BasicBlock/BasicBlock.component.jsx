@@ -104,12 +104,12 @@ export function BasicBlock(props) {
     //   blockCollisionRotate;
     if (blockCollisionRotate === false) setCompositeBlockOffset({ x, y });
   }, [
-    props.compositeBlockState.isInColision.rotation,
-    props.defBlockState.playingFieldWidth,
-    props.defBlockState.playingFieldHeight,
+    // props.compositeBlockState.isInColision.rotation,
+    // props.defBlockState.playingFieldWidth,
+    // props.defBlockState.playingFieldHeight,
     props.compositeBlock.name,
     props.playingFieldBlocksCords,
-    props.indexkey,
+    // props.indexkey,
     compositeBlockOffset.x,
     compositeBlockOffset.y,
     calculatedX,
