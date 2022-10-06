@@ -88,46 +88,61 @@ export function BasicBlock(props) {
     default:
       console.log("something broke", x);
   }
+  let isInColisionRotate = props.playingFieldBlocksCords.filter(
+    //filters blocks with same cordinates if we move right one block
+    (e) => e.left === calculatedX && e.top === calculatedY
+  );
+  if (isInColisionRotate.length > 0) blockCollisionRotate = true;
+
+  props.compositeBlockState.isInColision.rotation[props.indexkey] =
+    !(
+      (
+        props.compositeBlockState.top + y <
+        props.defBlockState.playingFieldHeight - 1
+      ) //if it is out of bounds down
+    ) ||
+    !(
+      (
+        props.compositeBlockState.left +
+          x +
+          Math.floor(basicBlockState.playingFieldWidth / 2) <
+        props.defBlockState.playingFieldWidth
+      ) //if it is out of bounds right
+    ) ||
+    !(
+      (
+        props.compositeBlockState.left +
+          x +
+          Math.floor(basicBlockState.playingFieldWidth / 2) >
+        -1
+      ) //if it is out of bounds left
+    ) ||
+    blockCollisionRotate;
 
   useEffect(() => {
     if (props.compositeBlockState.rotation === 0) return;
     if (props.compositeBlockState.rotation === basicBlockState.rotation) return;
-    if (blockCollisionRotate === false) {
+    if (props.compositeBlockState.toRotate === true) {
       setCompositeBlockOffset({ x, y });
       setBasicBlockState((state) => ({
         ...state,
         rotation: basicBlockState.rotation + 1,
       }));
       return;
-    } else if (blockCollisionRotate === true) {
+    } else if (props.compositeBlockState.toRotate === false) {
       props.setCompositeBlockState((state) => ({
         ...state,
         rotation: props.compositeBlockState.rotation - 1,
       }));
     }
   }, [
+    props.setCompositeBlockState.toRotate,
     props.compositeBlockState.rotation,
     basicBlockState.rotation,
-    blockCollisionRotate,
     props,
     x,
     y,
   ]);
-
-  // useEffect(() => {
-  //   if (props.compositeBlockState.rotation !== 0) {
-  //     let abc = document.querySelector(`.basicBlock__${props.indexkey}`);
-  //     abc.dispatchEvent(new Event("rotate"));
-  //   }
-  // }, [props.compositeBlockState.rotation, props.indexkey]);
-  // useEffect(() => {
-  //   const compositeBlock = document.querySelector(
-  //     `.basicBlock__${props.indexkey}`
-  //   );
-  //   compositeBlock.addEventListener("rotate", () => {
-  //     rotation();
-  //   });
-  // });
 
   useEffect(() => {
     let sendCord = true;

@@ -18,6 +18,7 @@ export function PlayingField() {
         },
       toAppend: false,
       toRenderCompositeBlock: true,
+      toRotate:true,
       playingFieldWidth: 24,
       playingFieldHeight: 28,
       text: "",                     //block text (atm no use)

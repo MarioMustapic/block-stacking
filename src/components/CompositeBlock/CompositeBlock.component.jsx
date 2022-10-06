@@ -71,7 +71,6 @@ export function CompositeBlock(props) {
       rotation: compositeBlockState.rotation + 1,
     }));
   };
-
   const handleKeyDown = (e) => {
     e.preventDefault();
     const collisionLeft = compositeBlockState.isInColision.left;
@@ -88,19 +87,51 @@ export function CompositeBlock(props) {
       collisionRight[1] === true ||
       collisionRight[2] === true ||
       collisionRight[3] === true;
+    const collisionRotation = compositeBlockState.isInColision.rotation;
+    let isCollisionRotationTrue = false;
+    isCollisionRotationTrue =
+      collisionRotation[0] === true || //cheking if any block is in rotation colision
+      collisionRotation[1] === true ||
+      collisionRotation[2] === true ||
+      collisionRotation[3] === true;
+    if (isCollisionRotationTrue === true)
+      setCompositeBlockState((state) => ({
+        ...state,
+        toRotate: false,
+      }));
+    else if (isCollisionRotationTrue === false)
+      setCompositeBlockState((state) => ({
+        ...state,
+        toRotate: true,
+      }));
     if (e.code === "ArrowDown") return moveDown();
     else if (e.code === "ArrowRight" && isCollisionRightTrue === false)
       return moveRight();
     else if (e.code === "ArrowLeft" && isCollisionLeftTrue === false)
       return moveLeft();
-    else if (
-      e.code === "ArrowUp" // &&
-      // compositeBlockState.isInColision.rotation === false
-    ) {
+    else if (e.code === "ArrowUp" && isCollisionRotationTrue === false) {
       return rotate();
     }
   };
-
+  // useEffect(() => {
+  //   const collisionRotation = compositeBlockState.isInColision.rotation;
+  //   let isCollisionRotationTrue = false;
+  //   isCollisionRotationTrue =
+  //     collisionRotation[0] === true || //cheking if any block is in rotation colision
+  //     collisionRotation[1] === true ||
+  //     collisionRotation[2] === true ||
+  //     collisionRotation[3] === true;
+  //   if (isCollisionRotationTrue === true)
+  //     setCompositeBlockState((state) => ({
+  //       ...state,
+  //       toRotate: false,
+  //     }));
+  //   else if (isCollisionRotationTrue === false)
+  //     setCompositeBlockState((state) => ({
+  //       ...state,
+  //       toRotate: true,
+  //     }));
+  // }, [compositeBlockState.isInColision.rotation]);
   useEffect(() => {
     const toAppend = compositeBlockState.toAppend;
     if (toAppend === false) return;
