@@ -1,12 +1,13 @@
 import { useEffect } from "react";
+import { useRef } from "react";
 import { useState } from "react";
 import "./BasicBlock.styles.scss";
 
 export function BasicBlock(props) {
+  const ref = useRef(null);
   const [basicBlockState, setBasicBlockState] = useState(
     props.compositeBlockState
   );
-  // const [rotationOffset, setCompositeBlockOffset] = useState({ x: 0, y: 0 });
   const [compositeBlockOffset, setCompositeBlockOffset] = useState({
     x: props.compositeBlock.x,
     y: props.compositeBlock.y,
@@ -157,12 +158,26 @@ export function BasicBlock(props) {
         top: calculatedY,
       });
       sendCord = false;
+      ref.current.classList.add(`row__${calculatedY}`);
+
       let row = props.playingFieldBlocksCords.filter(
         (e) => e.top === calculatedY
       );
-      console.log(row, props.defBlockState.playingFieldWidth);
+      // console.log(row, props.defBlockState.playingFieldWidth);
       if (row.length === props.defBlockState.playingFieldWidth) {
         console.log("deleting row", calculatedY);
+        document
+          .querySelectorAll(`.row__${calculatedY}`)
+          .forEach((e) => e.remove());
+        let newCordsArray = props.playingFieldBlocksCords.filter(
+          (e) => e.top !== calculatedY
+        );
+        let moveCordsDown = newCordsArray.forEach((e) => {
+          if (e.top > calculatedY) return;
+          e.top++;
+        });
+        console.log(moveCordsDown);
+        props.updatePlayingFieldBlocksCords(moveCordsDown);
       }
     }
   }, [calculatedX, calculatedY, props]);
@@ -219,7 +234,12 @@ export function BasicBlock(props) {
   };
 
   return (
-    <div className={className} indexkey={props.indexkey} style={style}>
+    <div
+      ref={ref}
+      className={className}
+      indexkey={props.indexkey}
+      style={style}
+    >
       {props.defBlockState.text}
     </div>
   );
