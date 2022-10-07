@@ -157,6 +157,13 @@ export function BasicBlock(props) {
         top: calculatedY,
       });
       sendCord = false;
+      let row = props.playingFieldBlocksCords.filter(
+        (e) => e.top === calculatedY
+      );
+      console.log(row, props.defBlockState.playingFieldWidth);
+      if (row.length === props.defBlockState.playingFieldWidth) {
+        console.log("deleting row", calculatedY);
+      }
     }
   }, [calculatedX, calculatedY, props]);
 
