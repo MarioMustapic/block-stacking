@@ -113,25 +113,7 @@ export function CompositeBlock(props) {
       return rotate();
     }
   };
-  // useEffect(() => {
-  //   const collisionRotation = compositeBlockState.isInColision.rotation;
-  //   let isCollisionRotationTrue = false;
-  //   isCollisionRotationTrue =
-  //     collisionRotation[0] === true || //cheking if any block is in rotation colision
-  //     collisionRotation[1] === true ||
-  //     collisionRotation[2] === true ||
-  //     collisionRotation[3] === true;
-  //   if (isCollisionRotationTrue === true)
-  //     setCompositeBlockState((state) => ({
-  //       ...state,
-  //       toRotate: false,
-  //     }));
-  //   else if (isCollisionRotationTrue === false)
-  //     setCompositeBlockState((state) => ({
-  //       ...state,
-  //       toRotate: true,
-  //     }));
-  // }, [compositeBlockState.isInColision.rotation]);
+
   useEffect(() => {
     const toAppend = compositeBlockState.toAppend;
     if (toAppend === false) return;
@@ -203,6 +185,7 @@ export function CompositeBlock(props) {
         key={index}
         indexkey={index}
         defBlockState={props.defBlockState}
+        setDefBlockState={props.setDefBlockState}
         compositeBlock={compositeBlock}
         compositeBlockState={compositeBlockState}
         setCompositeBlockState={setCompositeBlockState}

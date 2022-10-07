@@ -19,7 +19,7 @@ export function PlayingField() {
       toAppend: false,
       toRenderCompositeBlock: true,
       toRotate:true,
-      playingFieldWidth: 24,
+      playingFieldWidth: 12,
       playingFieldHeight: 28,
       text: "",                     //block text (atm no use)
       gravityTimer: 500,         //timer for downward movment over time
@@ -31,6 +31,8 @@ export function PlayingField() {
   });
   const [playingFieldBlocksCords, updatePlayingFieldBlocksCords] = useState([]);
   const [gravityTick, setGravityTick] = useState(0);
+
+  // playingFieldBlocksCords.filter();
 
   useEffect(() => {
     if (state.toRenderCompositeBlock === false)

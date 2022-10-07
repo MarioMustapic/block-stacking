@@ -16,7 +16,8 @@ export function BasicBlock(props) {
   let calculatedX =
     props.compositeBlockState.left +
     compositeBlockOffset.x +
-    Math.floor(basicBlockState.playingFieldWidth / 2);
+    Math.floor(basicBlockState.playingFieldWidth / 2) -
+    2;
 
   let x = compositeBlockOffset.x;
   let y = compositeBlockOffset.y;
@@ -94,8 +95,8 @@ export function BasicBlock(props) {
       e.left ===
         props.compositeBlockState.left +
           x +
-          Math.floor(basicBlockState.playingFieldWidth / 2) &&
-      e.top === props.compositeBlockState.top + y
+          Math.floor(basicBlockState.playingFieldWidth / 2) -
+          2 && e.top === props.compositeBlockState.top + y
   );
 
   props.compositeBlockState.isInColision.rotation[props.indexkey] =
@@ -109,7 +110,8 @@ export function BasicBlock(props) {
       (
         props.compositeBlockState.left +
           x +
-          Math.floor(basicBlockState.playingFieldWidth / 2) <
+          Math.floor(basicBlockState.playingFieldWidth / 2) -
+          2 <
         props.defBlockState.playingFieldWidth
       ) //if it is out of bounds right
     ) ||
@@ -118,7 +120,7 @@ export function BasicBlock(props) {
         props.compositeBlockState.left +
           x +
           Math.floor(basicBlockState.playingFieldWidth / 2) >
-        -1
+        +1
       ) //if it is out of bounds left
     ) ||
     isInColisionRotate.length > 0;
@@ -147,43 +149,6 @@ export function BasicBlock(props) {
       }));
     }
   }
-  // useEffect(() => {
-  //   let isInColisionRotate = props.playingFieldBlocksCords.filter(
-  //     //filters blocks with same cordinates if we move right one block
-  //     (e) => e.left === x && e.top === y
-  //   );
-  //   if (props.compositeBlockState.rotation === 0) return;
-  //   if (props.compositeBlockState.rotation === basicBlockState.rotation) return;
-  //   if (
-  //     props.compositeBlockState.toRotate === true &&
-  //     isInColisionRotate.length < 1
-  //   ) {
-  //     console.log(isInColisionRotate.length);
-  //     setCompositeBlockOffset({ x, y });
-  //     setBasicBlockState((state) => ({
-  //       ...state,
-  //       rotation: basicBlockState.rotation + 1,
-  //     }));
-  //     return;
-  //   } else if (
-  //     props.compositeBlockState.toRotate === false ||
-  //     isInColisionRotate.length > 0
-  //   ) {
-  //     props.setCompositeBlockState((state) => ({
-  //       ...state,
-  //       rotation: props.compositeBlockState.rotation - 1,
-  //     }));
-  //   }
-  // }, [
-  //   props.setCompositeBlockState.toRotate,
-  //   props.compositeBlockState.rotation,
-  //   basicBlockState.rotation,
-  //   // blockCollisionRotate,
-  //   props,
-  //   x,
-  //   y,
-  // ]);
-
   useEffect(() => {
     let sendCord = true;
     if (sendCord === true && props.compositeBlockState.toAppend === true) {
@@ -206,8 +171,8 @@ export function BasicBlock(props) {
     (e) => e.left === calculatedX && e.top === calculatedY
   );
   if (gameOverTrigger.length > 0) {
-    props.updatePlayingFieldBlocksCords([]);
     document.querySelectorAll(".basicBlock").forEach((e) => e.remove());
+    props.updatePlayingFieldBlocksCords([]);
   }
 
   props.compositeBlockState.isInColision.down[props.indexkey] =
