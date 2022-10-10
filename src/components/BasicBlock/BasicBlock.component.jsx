@@ -5,9 +5,22 @@ import "./BasicBlock.styles.scss";
 
 export function BasicBlock(props) {
   const ref = useRef(null);
-  const [basicBlockState, setBasicBlockState] = useState(
-    props.compositeBlockState
-  );
+  const [basicBlockState, setBasicBlockState] = useState({
+    ...props.compositeBlockState,
+    blockRole: "",
+  });
+  useEffect(() => {
+    if (basicBlockState.blockRole === "")
+      setBasicBlockState((state) => ({
+        ...state,
+        blockRole: "moving",
+      }));
+    if (props.compositeBlockState.toAppend === true)
+      setBasicBlockState((state) => ({
+        ...state,
+        blockRole: "static",
+      }));
+  }, [basicBlockState.blockRole, props.compositeBlockState.toAppend]);
   const [compositeBlockOffset, setCompositeBlockOffset] = useState({
     x: props.compositeBlock.x,
     y: props.compositeBlock.y,
@@ -172,9 +185,12 @@ export function BasicBlock(props) {
         let newCordsArray = props.playingFieldBlocksCords.filter(
           (e) => e.top !== calculatedY
         );
-        let moveCordsDown = newCordsArray.forEach((e) => {
-          if (e.top > calculatedY) return;
-          e.top++;
+        let moveCordsDown = newCordsArray.map((e) => {
+          if (e.top > calculatedY) return e;
+          return {
+            left: e.left,
+            top: e.top + 1,
+          };
         });
         console.log(moveCordsDown);
         props.updatePlayingFieldBlocksCords(moveCordsDown);
