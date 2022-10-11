@@ -32,8 +32,6 @@ export function PlayingField() {
   const [playingFieldBlocksCords, updatePlayingFieldBlocksCords] = useState([]);
   const [gravityTick, setGravityTick] = useState(0);
 
-  // playingFieldBlocksCords.filter();
-
   useEffect(() => {
     if (state.toRenderCompositeBlock === false)
       setState(() => ({

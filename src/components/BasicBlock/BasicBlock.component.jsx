@@ -4,27 +4,24 @@ import { useState } from "react";
 import "./BasicBlock.styles.scss";
 
 export function BasicBlock(props) {
-  const ref = useRef(null);
+  const blockRef = useRef(null);
   const [basicBlockState, setBasicBlockState] = useState({
     ...props.compositeBlockState,
     blockRole: "",
   });
+  const [staticCord, setStaticCord] = useState({});
+  const [compositeBlockOffset, setCompositeBlockOffset] = useState({
+    x: props.compositeBlock.x,
+    y: props.compositeBlock.y,
+  });
+
   useEffect(() => {
     if (basicBlockState.blockRole === "")
       setBasicBlockState((state) => ({
         ...state,
         blockRole: "moving",
       }));
-    if (props.compositeBlockState.toAppend === true)
-      setBasicBlockState((state) => ({
-        ...state,
-        blockRole: "static",
-      }));
-  }, [basicBlockState.blockRole, props.compositeBlockState.toAppend]);
-  const [compositeBlockOffset, setCompositeBlockOffset] = useState({
-    x: props.compositeBlock.x,
-    y: props.compositeBlock.y,
-  });
+  }, [basicBlockState.blockRole]);
 
   let calculatedY = props.compositeBlockState.top + compositeBlockOffset.y;
   let calculatedX =
@@ -170,13 +167,20 @@ export function BasicBlock(props) {
         left: calculatedX, //sending cordinates when appending, should happen only once
         top: calculatedY,
       });
+      setBasicBlockState((state) => ({
+        ...state,
+        blockRole: "static",
+      }));
+      setStaticCord((state) => ({
+        ...state,
+        top: calculatedY,
+        left: calculatedX,
+      }));
       sendCord = false;
-      ref.current.classList.add(`row__${calculatedY}`);
-
       let row = props.playingFieldBlocksCords.filter(
         (e) => e.top === calculatedY
       );
-      // console.log(row, props.defBlockState.playingFieldWidth);
+
       if (row.length === props.defBlockState.playingFieldWidth) {
         console.log("deleting row", calculatedY);
         document
@@ -196,7 +200,7 @@ export function BasicBlock(props) {
         props.updatePlayingFieldBlocksCords(moveCordsDown);
       }
     }
-  }, [calculatedX, calculatedY, props]);
+  }, [calculatedX, calculatedY, props, staticCord]);
 
   let blockCollisionDown = false;
   let isInColisionDown = props.playingFieldBlocksCords.filter(
@@ -240,18 +244,30 @@ export function BasicBlock(props) {
       (calculatedX < props.defBlockState.playingFieldWidth - 1) //if it is out of bounds right
     ) || blockCollisionRight;
 
-  const className = `basicBlock__${props.indexkey} basicBlock`;
-  const style = {
-    backgroundColor: props.compositeBlock.blockColor,
-    height: basicBlockState.basicBlockSize,
-    width: basicBlockState.basicBlockSize,
-    top: calculatedY * basicBlockState.basicBlockSize,
-    left: calculatedX * basicBlockState.basicBlockSize,
-  };
+  const className = `basicBlock__${props.indexkey} basicBlock row__${calculatedY}`;
+  let style = {};
+  if (basicBlockState.blockRole === "moving")
+    style = {
+      backgroundColor: props.compositeBlock.blockColor,
+      height: basicBlockState.basicBlockSize,
+      width: basicBlockState.basicBlockSize,
+      top: calculatedY * basicBlockState.basicBlockSize,
+      left: calculatedX * basicBlockState.basicBlockSize,
+    };
+  if (basicBlockState.blockRole === "static")
+    style = {
+      backgroundColor: props.compositeBlock.blockColor,
+      height: basicBlockState.basicBlockSize,
+      width: basicBlockState.basicBlockSize,
+      top: staticCord.top * basicBlockState.basicBlockSize,
+      left: staticCord.left * basicBlockState.basicBlockSize,
+    };
+  // console.log(props.playingFieldBlocksCords);
+  // console.log(blockRef.current);
 
   return (
     <div
-      ref={ref}
+      ref={blockRef}
       className={className}
       indexkey={props.indexkey}
       style={style}
