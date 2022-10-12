@@ -25,7 +25,7 @@ export function PlayingField() {
       playingFieldWidth: 12,
       playingFieldHeight: 28,
       text: "",                     //block text (atm no use)
-      gravityTimer: 500,         //timer for downward movment over time
+      gravityTimer: 50000,         //timer for downward movment over time
       basicBlockSize: 20,           //size in pixels
       compositeBlockSize: 5,        //max height or width in number of basicBlocks
       backgroundColor: "",          //def background color
@@ -63,19 +63,19 @@ export function PlayingField() {
       playingField.classList.remove("focus")
     );
   };
-  const playingFieldBlock = playingFieldBlocksCords.map(
-    (compositeBlock, index) => (
-      <PlayingFieldBlock
-        key={index}
-        indexkey={index}
-        defBlockState={state}
-        setDefBlockState={setState}
-        compositeBlock={compositeBlock}
-        playingFieldBlocksCords={playingFieldBlocksCords}
-        updatePlayingFieldBlocksCords={updatePlayingFieldBlocksCords}
-      />
-    )
-  );
+  // let id_html = `row__${calculatedY} column__${calculatedX}`;
+  const playingFieldBlock = playingFieldBlocksCords.map((playingFieldBlock) => (
+    <PlayingFieldBlock
+      key={`row__${playingFieldBlock.top} column__${playingFieldBlock.left}`}
+      id={`row__${playingFieldBlock.top} column__${playingFieldBlock.left}`}
+      indexkey={`row__${playingFieldBlock.top} column__${playingFieldBlock.left}`}
+      defBlockState={state}
+      setDefBlockState={setState}
+      playingFieldBlock={playingFieldBlock}
+      playingFieldBlocksCords={playingFieldBlocksCords}
+      updatePlayingFieldBlocksCords={updatePlayingFieldBlocksCords}
+    />
+  ));
 
   return (
     <div

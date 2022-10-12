@@ -174,6 +174,7 @@ export function BasicBlock(props) {
       props.playingFieldBlocksCords.push({
         left: calculatedX, //sending cordinates when appending, should happen only once
         top: calculatedY,
+        backgroundColor: props.compositeBlock.blockColor,
       });
       setBasicBlockState((state) => ({
         ...state,
@@ -253,6 +254,7 @@ export function BasicBlock(props) {
     ) || blockCollisionRight;
 
   const className = `basicBlock__${props.indexkey} basicBlock row__${calculatedY}`;
+  const id_html = `row__${calculatedY} column__${calculatedX}`;
   let style = {};
   if (basicBlockState.blockRole === "moving")
     style = {
@@ -278,6 +280,7 @@ export function BasicBlock(props) {
     <div
       ref={blockRef}
       className={className}
+      id={id_html}
       indexkey={props.indexkey}
       style={style}
     >
