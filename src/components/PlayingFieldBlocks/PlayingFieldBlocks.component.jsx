@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
-import "./BasicBlock.styles.scss";
+import "./PlayingFieldBlocks.styles.scss";
 
-export function BasicBlock(props) {
-  const blockRef = useRef(null);
+export function PlayingFieldBlock(props) {
+  const playingFieldBlockRef = useRef(null);
   const [basicBlockState, setBasicBlockState] = useState({
     ...props.compositeBlockState,
     blockRole: "",
@@ -276,7 +276,7 @@ export function BasicBlock(props) {
 
   return (
     <div
-      ref={blockRef}
+      ref={playingFieldBlockRef}
       className={className}
       indexkey={props.indexkey}
       style={style}

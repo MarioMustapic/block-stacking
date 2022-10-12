@@ -117,11 +117,11 @@ export function CompositeBlock(props) {
   useEffect(() => {
     const toAppend = compositeBlockState.toAppend;
     if (toAppend === false) return;
-    const playingField = document.querySelector(".playingField");
-    const basicBlocks = document.querySelectorAll(
-      ".compositeBlock .basicBlock"
-    );
-    playingField.append(...basicBlocks);
+    // const playingField = document.querySelector(".playingField");
+    // const basicBlocks = document.querySelectorAll(
+    //   ".compositeBlock .basicBlock"
+    // );
+    // playingField.append(...basicBlocks);
     setCompositeBlockState((state) => ({
       ...state,
       toAppend: false,

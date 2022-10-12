@@ -1,9 +1,12 @@
 import "./PlayingField.styles.scss";
 import { useState } from "react";
 import { CompositeBlock } from "../CompositeBlock/CompositeBlock.component";
+import { PlayingFieldBlock } from "../PlayingFieldBlocks/PlayingFieldBlocks.component";
 import { useEffect } from "react";
+import { useRef } from "react";
 
 export function PlayingField() {
+  const playingFieldRef = useRef(null);
   // prettier-ignore
   const [state, setState] = useState ({
       top: 0,                       //def value for starting Y-axis position(top)
@@ -60,9 +63,23 @@ export function PlayingField() {
       playingField.classList.remove("focus")
     );
   };
+  const playingFieldBlock = playingFieldBlocksCords.map(
+    (compositeBlock, index) => (
+      <PlayingFieldBlock
+        key={index}
+        indexkey={index}
+        defBlockState={state}
+        setDefBlockState={setState}
+        compositeBlock={compositeBlock}
+        playingFieldBlocksCords={playingFieldBlocksCords}
+        updatePlayingFieldBlocksCords={updatePlayingFieldBlocksCords}
+      />
+    )
+  );
 
   return (
     <div
+      ref={playingFieldRef}
       className="playingField"
       onClick={handleClick}
       tabIndex={0}
@@ -75,6 +92,7 @@ export function PlayingField() {
         }px`,
       }}
     >
+      {playingFieldBlock}
       {state.toRenderCompositeBlock && (
         <CompositeBlock
           defBlockState={state}
