@@ -203,6 +203,7 @@ export function BasicBlock(props) {
           return {
             left: e.left,
             top: e.top + 1,
+            backgroundColor: props.compositeBlock.blockColor,
           };
         });
         console.log(moveCordsDown);
@@ -255,26 +256,14 @@ export function BasicBlock(props) {
 
   const className = `basicBlock__${props.indexkey} basicBlock row__${calculatedY}`;
   const id_html = `row__${calculatedY} column__${calculatedX}`;
-  let style = {};
-  if (basicBlockState.blockRole === "moving")
-    style = {
-      backgroundColor: props.compositeBlock.blockColor,
-      height: basicBlockState.basicBlockSize,
-      width: basicBlockState.basicBlockSize,
-      top: calculatedY * basicBlockState.basicBlockSize,
-      left: calculatedX * basicBlockState.basicBlockSize,
-    };
-  if (basicBlockState.blockRole === "static")
-    style = {
-      backgroundColor: "white",
-      // backgroundColor: props.compositeBlock.blockColor,
-      // height: basicBlockState.basicBlockSize,
-      // width: basicBlockState.basicBlockSize,
-      // top: staticCord.top * basicBlockState.basicBlockSize,
-      // left: staticCord.left * basicBlockState.basicBlockSize,
-    };
-  // console.log(props.playingFieldBlocksCords);
-  // console.log(blockRef.current);
+
+  let style = {
+    backgroundColor: props.compositeBlock.blockColor,
+    height: basicBlockState.basicBlockSize,
+    width: basicBlockState.basicBlockSize,
+    top: calculatedY * basicBlockState.basicBlockSize,
+    left: calculatedX * basicBlockState.basicBlockSize,
+  };
 
   return (
     <div

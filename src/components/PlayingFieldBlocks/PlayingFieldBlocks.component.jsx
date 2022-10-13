@@ -271,7 +271,6 @@ export function PlayingFieldBlock(props) {
   };
   // console.log(props.playingFieldBlocksCords);
   // console.log(blockRef.current);
-
   return (
     <div
       ref={playingFieldBlockRef}
