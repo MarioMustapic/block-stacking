@@ -191,6 +191,8 @@ export function CompositeBlock(props) {
         setCompositeBlockState={setCompositeBlockState}
         playingFieldBlocksCords={props.playingFieldBlocksCords}
         updatePlayingFieldBlocksCords={props.updatePlayingFieldBlocksCords}
+        rowsToCheck={props.rowsToCheck}
+        setRowsToCheck={props.setRowsToCheck}
       />
     )
   );

@@ -33,6 +33,7 @@ export function PlayingField() {
       gameOver: false,              //if true, start over
   });
   const [playingFieldBlocksCords, updatePlayingFieldBlocksCords] = useState([]);
+  const [rowsToCheck, setRowsToCheck] = useState([]);
   const [gravityTick, setGravityTick] = useState(0);
 
   useEffect(() => {
@@ -63,7 +64,33 @@ export function PlayingField() {
       playingField.classList.remove("focus")
     );
   };
-  // let id_html = `row__${calculatedY} column__${calculatedX}`;
+
+  if (rowsToCheck.length !== 0)
+    for (let i = 0; i < rowsToCheck.length; i++) {
+      let row = playingFieldBlocksCords.filter((e) => e.top === rowsToCheck[i]);
+
+      if (row.length === state.playingFieldWidth) {
+        console.log("deleting row", rowsToCheck[i]);
+        document
+          .querySelectorAll(`.row__${rowsToCheck[i]}`)
+          .forEach((e) => e.remove());
+        let newCordsArray = playingFieldBlocksCords.filter(
+          (e) => e.top !== rowsToCheck[i]
+        );
+        let moveCordsDown = newCordsArray.map((e) => {
+          if (e.top > rowsToCheck[i]) return e;
+          return {
+            left: e.left,
+            top: e.top + 1,
+            backgroundColor: e.backgroundColor,
+          };
+        });
+        console.log(moveCordsDown);
+        updatePlayingFieldBlocksCords(moveCordsDown);
+      }
+      setRowsToCheck(rowsToCheck.filter((e) => e !== rowsToCheck[i]));
+    }
+
   const playingFieldBlock = playingFieldBlocksCords.map((playingFieldBlock) => (
     <PlayingFieldBlock
       key={`row__${playingFieldBlock.top} column__${playingFieldBlock.left}`}
@@ -101,6 +128,8 @@ export function PlayingField() {
           updatePlayingFieldBlocksCords={updatePlayingFieldBlocksCords}
           gravityTick={gravityTick}
           setGravityTick={setGravityTick}
+          rowsToCheck={rowsToCheck}
+          setRowsToCheck={setRowsToCheck}
         />
       )}
     </div>
