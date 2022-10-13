@@ -65,12 +65,17 @@ export function PlayingField() {
     );
   };
 
-  if (rowsToCheck.length !== 0)
+  if (rowsToCheck.length !== 0) {
+    console.log(rowsToCheck);
+
+    setRowsToCheck(rowsToCheck.sort());
+    console.log(rowsToCheck);
+
     for (let i = 0; i < rowsToCheck.length; i++) {
       let row = playingFieldBlocksCords.filter((e) => e.top === rowsToCheck[i]);
 
       if (row.length === state.playingFieldWidth) {
-        console.log("deleting row", rowsToCheck[i]);
+        console.log("deleting row", i, rowsToCheck[i]);
         document
           .querySelectorAll(`.row__${rowsToCheck[i]}`)
           .forEach((e) => e.remove());
@@ -85,11 +90,11 @@ export function PlayingField() {
             backgroundColor: e.backgroundColor,
           };
         });
-        console.log(moveCordsDown);
         updatePlayingFieldBlocksCords(moveCordsDown);
       }
       setRowsToCheck(rowsToCheck.filter((e) => e !== rowsToCheck[i]));
     }
+  }
 
   const playingFieldBlock = playingFieldBlocksCords.map((playingFieldBlock) => (
     <PlayingFieldBlock
