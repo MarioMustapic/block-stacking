@@ -158,7 +158,12 @@ export function BasicBlock(props) {
         top: calculatedY,
         backgroundColor: props.compositeBlock.blockColor,
       });
-      props.rowsToCheck.push(calculatedY);
+      let duplicateRows = 0;
+      props.rowsToCheck.forEach((e) => {
+        if (e === calculatedY) duplicateRows++;
+      });
+      if (duplicateRows === 0) props.rowsToCheck.push(calculatedY);
+
       sendCord = false;
     }
   }, [calculatedX, calculatedY, props]);

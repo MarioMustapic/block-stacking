@@ -66,35 +66,37 @@ export function PlayingField() {
   };
 
   if (rowsToCheck.length !== 0) {
+    let playingFieldBlocksCordsAfter = structuredClone(playingFieldBlocksCords);
+    console.log(playingFieldBlocksCordsAfter, playingFieldBlocksCords);
+    let rowBlocks = [];
     console.log(rowsToCheck);
-
-    setRowsToCheck(rowsToCheck.sort());
+    rowsToCheck.sort(function (a, b) {
+      return a - b;
+    });
     console.log(rowsToCheck);
-
-    for (let i = 0; i < rowsToCheck.length; i++) {
-      let row = playingFieldBlocksCords.filter((e) => e.top === rowsToCheck[i]);
-
-      if (row.length === state.playingFieldWidth) {
-        console.log("deleting row", i, rowsToCheck[i]);
-        document
-          .querySelectorAll(`.row__${rowsToCheck[i]}`)
-          .forEach((e) => e.remove());
-        let newCordsArray = playingFieldBlocksCords.filter(
-          (e) => e.top !== rowsToCheck[i]
+    rowsToCheck.forEach((row) => {
+      rowBlocks = playingFieldBlocksCords.filter((e) => e.top === row);
+      if (rowBlocks.length === state.playingFieldWidth) {
+        console.log("deleting row", row);
+        playingFieldBlocksCordsAfter = playingFieldBlocksCordsAfter.filter(
+          (e) => e.top !== row
         );
-        let moveCordsDown = newCordsArray.map((e) => {
-          if (e.top > rowsToCheck[i]) return e;
+        playingFieldBlocksCordsAfter = playingFieldBlocksCordsAfter.map((e) => {
+          if (e.top > row) return e;
           return {
             left: e.left,
             top: e.top + 1,
             backgroundColor: e.backgroundColor,
           };
         });
-        updatePlayingFieldBlocksCords(moveCordsDown);
       }
-      setRowsToCheck(rowsToCheck.filter((e) => e !== rowsToCheck[i]));
-    }
+    });
+    setRowsToCheck([]);
+    updatePlayingFieldBlocksCords(playingFieldBlocksCordsAfter);
+    // updatePlayingFieldBlocksCords(moveCordsDown);
   }
+  // setRowsToCheck(rowsToCheck.shift());
+  // setRowsToCheck([]);
 
   const playingFieldBlock = playingFieldBlocksCords.map((playingFieldBlock) => (
     <PlayingFieldBlock
