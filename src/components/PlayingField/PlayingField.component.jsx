@@ -84,20 +84,15 @@ export function PlayingField() {
         playingFieldBlocksCordsAfter = playingFieldBlocksCordsAfter.map((e) => {
           if (e.top > row) return e;
           return {
-            left: e.left,
+            ...e,
             top: e.top + 1,
-            backgroundColor: e.backgroundColor,
           };
         });
       }
     });
     setRowsToCheck([]);
     updatePlayingFieldBlocksCords(playingFieldBlocksCordsAfter);
-    // updatePlayingFieldBlocksCords(moveCordsDown);
   }
-  // setRowsToCheck(rowsToCheck.shift());
-  // setRowsToCheck([]);
-
   const playingFieldBlock = playingFieldBlocksCords.map((playingFieldBlock) => (
     <PlayingFieldBlock
       key={`row__${playingFieldBlock.top} column__${playingFieldBlock.left}`}
