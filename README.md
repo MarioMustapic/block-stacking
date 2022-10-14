@@ -41,9 +41,20 @@ Build the project for production.
 ## Features
 
 - [ ] Basic gamplay
-- [ ]
+  - [x] movement of block (atm only way to interact is controlled by keyboard)
+  - [x] rotation (clockwise) of block
+  - [x] block collision logic
+  - [x] handling row complete logic
+  - [x] handling game over logic
 
 ## Roadmap
 
+- [ ] Basic gamplay
+  - [ ] showing next block
+  - [ ] rotation counterclockwise
+  - [ ] more flashy game over and row deletion
+  - [ ] score and all-time high scores table
+- [ ] support for touch and click, so it can be played on mobile
+- [ ] options for keybindings, difficulty etc...
 - [ ] adding second player.
 - [ ] enabling multiplayer over net.
