@@ -1,4 +1,5 @@
 import "./App.css";
+import { ControlsField } from "./components/ControlsField/ControlsField.component";
 import { PlayingField } from "./components/PlayingField/PlayingField.component";
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <div className="App">
       {" "}
       <PlayingField />{" "}
+      <ControlsField/>
     </div>
   );
 }

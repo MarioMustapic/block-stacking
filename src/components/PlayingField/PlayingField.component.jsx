@@ -25,7 +25,7 @@ export function PlayingField() {
       playingFieldWidth: 12,
       playingFieldHeight: 28,
       text: "",                     //block text (atm no use)
-      gravityTimer: 50000,         //timer for downward movment over time
+      gravityTimer: 500,         //timer for downward movment over time
       basicBlockSize: 20,           //size in pixels
       compositeBlockSize: 5,        //max height or width in number of basicBlocks
       backgroundColor: "",          //def background color
@@ -67,17 +67,13 @@ export function PlayingField() {
 
   if (rowsToCheck.length !== 0) {
     let playingFieldBlocksCordsAfter = structuredClone(playingFieldBlocksCords);
-    console.log(playingFieldBlocksCordsAfter, playingFieldBlocksCords);
     let rowBlocks = [];
-    console.log(rowsToCheck);
     rowsToCheck.sort(function (a, b) {
       return a - b;
     });
-    console.log(rowsToCheck);
     rowsToCheck.forEach((row) => {
       rowBlocks = playingFieldBlocksCords.filter((e) => e.top === row);
       if (rowBlocks.length === state.playingFieldWidth) {
-        console.log("deleting row", row);
         playingFieldBlocksCordsAfter = playingFieldBlocksCordsAfter.filter(
           (e) => e.top !== row
         );
