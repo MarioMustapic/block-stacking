@@ -22,11 +22,11 @@ export function PlayingField() {
       toAppend: false,
       toRenderCompositeBlock: true,
       toRotate:true,
-      playingFieldWidth: 12,
-      playingFieldHeight: 28,
+      playingFieldWidth: 10,
+      playingFieldHeight: 20,
       text: "",                     //block text (atm no use)
-      gravityTimer: 500,         //timer for downward movment over time
-      basicBlockSize: 20,           //size in pixels
+      gravityTimer: 700,         //timer for downward movment over time
+      basicBlockSize: 25,           //size in pixels
       compositeBlockSize: 5,        //max height or width in number of basicBlocks
       backgroundColor: "",          //def background color
       blockType: Math.floor(Math.random() * 7),  //block randomizer
@@ -37,14 +37,22 @@ export function PlayingField() {
   const [gravityTick, setGravityTick] = useState(0);
 
   useEffect(() => {
+    if("ontouchstart" in document.documentElement ===true)
+      setState((state) => ({
+        ...state,
+        basicBlockSize:20,
+      }));
+  }, [state.basicBlockSize]);
+
+  useEffect(() => {
     if (state.toRenderCompositeBlock === false)
-      setState(() => ({
+      setState((state) => ({
         ...state,
         blockType: Math.floor(Math.random() * 7),
         toRenderCompositeBlock: true,
       }));
     setGravityTick(0);
-  }, [state]);
+  }, [state.toRenderCompositeBlock]);
 
   useEffect(() => {
     // "gravity" timer, make blocks move down on interval

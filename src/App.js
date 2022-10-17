@@ -5,9 +5,9 @@ import { PlayingField } from "./components/PlayingField/PlayingField.component";
 function App() {
   return (
     <div className="App">
-      {" "}
-      <PlayingField />{" "}
-      <ControlsField/>
+      <PlayingField />
+      {("ontouchstart" in document.documentElement)&&(<ControlsField/>)}
+      {/* <ControlsField/> */}
     </div>
   );
 }

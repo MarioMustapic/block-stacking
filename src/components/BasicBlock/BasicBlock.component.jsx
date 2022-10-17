@@ -215,10 +215,10 @@ export function BasicBlock(props) {
 
   let style = {
     backgroundColor: props.compositeBlock.blockColor,
-    height: basicBlockState.basicBlockSize,
-    width: basicBlockState.basicBlockSize,
-    top: calculatedY * basicBlockState.basicBlockSize,
-    left: calculatedX * basicBlockState.basicBlockSize,
+    height: props.defBlockState.basicBlockSize,
+    width: props.defBlockState.basicBlockSize,
+    top: calculatedY * props.defBlockState.basicBlockSize,
+    left: calculatedX * props.defBlockState.basicBlockSize,
   };
 
   return (
