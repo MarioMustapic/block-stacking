@@ -25,7 +25,7 @@ export function PlayingField() {
       playingFieldWidth: 10,
       playingFieldHeight: 20,
       text: "",                     //block text (atm no use)
-      gravityTimer: 700,         //timer for downward movment over time
+      gravityTimer: 70000,         //timer for downward movment over time
       basicBlockSize: 25,           //size in pixels
       compositeBlockSize: 5,        //max height or width in number of basicBlocks
       backgroundColor: "",          //def background color

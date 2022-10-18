@@ -1,6 +1,9 @@
 .controlsField {
     background-color: #eee;
     position: relative;
+    display: block;
+    align-items: center;
+    justify-content: center;
     top: 5vh;
     left: 10vw;
     display: flex;

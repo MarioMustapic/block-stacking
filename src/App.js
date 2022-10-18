@@ -6,8 +6,7 @@ function App() {
   return (
     <div className="App">
       <PlayingField />
-      {("ontouchstart" in document.documentElement)&&(<ControlsField/>)}
-      {/* <ControlsField/> */}
+      <ControlsField/>
     </div>
   );
 }
