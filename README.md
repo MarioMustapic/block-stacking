@@ -46,6 +46,7 @@ Build the project for production.
   - [x] block collision logic
   - [x] handling row complete logic
   - [x] handling game over logic
+- [x] support for touch and click, so it can be played on mobile(only basic, no repeat function if touch is "held down")
 
 ## Roadmap
 
@@ -54,7 +55,6 @@ Build the project for production.
   - [ ] rotation counterclockwise
   - [ ] more flashy game over and row deletion
   - [ ] score and all-time high scores table
-- [ ] support for touch and click, so it can be played on mobile
 - [ ] options for keybindings, difficulty etc...
 - [ ] adding second player.
 - [ ] enabling multiplayer over net.

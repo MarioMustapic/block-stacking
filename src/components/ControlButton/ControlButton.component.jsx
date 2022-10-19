@@ -2,12 +2,17 @@ import "./ControlButton.styles.scss";
 
 export function ControlButton(props) {
   let style = {
-    top: props.top,
-    left: props.left,
+    // top: props.top,
+    // left: props.left,
   };
   return (
-    <button id={props.id} className={props.className} style={style}>
+    <div
+      id={props.id}
+      className={props.className}
+      style={style}
+      onPointerDown={props.handleOnPointerDown}
+    >
       {props.children}
-    </button>
+    </div>
   );
 }

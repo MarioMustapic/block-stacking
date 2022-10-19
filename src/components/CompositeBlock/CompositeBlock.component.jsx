@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useEffect } from "react";
 import { BasicBlock } from "../BasicBlock/BasicBlock.component";
+import { ControlsField } from "../ControlsField/ControlsField.component";
 import "./CompositeBlock.styles.scss";
 
 export function CompositeBlock(props) {
@@ -114,6 +115,50 @@ export function CompositeBlock(props) {
     }
   };
 
+  const handleOnPointerDown = (e) => {
+    e.preventDefault();
+    console.log(e.target.id);
+    const collisionLeft = compositeBlockState.isInColision.left;
+    let isCollisionLeftTrue = false;
+    isCollisionLeftTrue =
+      collisionLeft[0] === true || //cheking if any block is in colision left
+      collisionLeft[1] === true ||
+      collisionLeft[2] === true ||
+      collisionLeft[3] === true;
+    const collisionRight = compositeBlockState.isInColision.right;
+    let isCollisionRightTrue = false;
+    isCollisionRightTrue =
+      collisionRight[0] === true || //cheking if any block is in colision right
+      collisionRight[1] === true ||
+      collisionRight[2] === true ||
+      collisionRight[3] === true;
+    const collisionRotation = compositeBlockState.isInColision.rotation;
+    let isCollisionRotationTrue = false;
+    isCollisionRotationTrue =
+      collisionRotation[0] === true || //cheking if any block is in rotation colision
+      collisionRotation[1] === true ||
+      collisionRotation[2] === true ||
+      collisionRotation[3] === true;
+    if (isCollisionRotationTrue === true)
+      setCompositeBlockState((state) => ({
+        ...state,
+        toRotate: false,
+      }));
+    else if (isCollisionRotationTrue === false)
+      setCompositeBlockState((state) => ({
+        ...state,
+        toRotate: true,
+      }));
+    if (e.target.id === "down") return moveDown();
+    else if (e.target.id === "right" && isCollisionRightTrue === false)
+      return moveRight();
+    else if (e.target.id === "left" && isCollisionLeftTrue === false)
+      return moveLeft();
+    else if (e.target.id === "rotate" && isCollisionRotationTrue === false) {
+      return rotate();
+    }
+  };
+
   useEffect(() => {
     const toAppend = compositeBlockState.toAppend;
     if (toAppend === false) return;
@@ -211,6 +256,10 @@ export function CompositeBlock(props) {
       tabIndex={0}
     >
       {basicBlocks}
+      {"ontouchstart" in document.documentElement && (
+        <ControlsField handleOnPointerDown={handleOnPointerDown} />
+      )}
+      {/* <ControlsField handleOnPointerDown={handleOnPointerDown} /> */}
     </div>
   );
 }
