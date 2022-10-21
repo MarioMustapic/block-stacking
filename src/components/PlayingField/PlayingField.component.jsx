@@ -31,6 +31,7 @@ export function PlayingField() {
       backgroundColor: "",          //def background color
       blockType: Math.floor(Math.random() * 7),  //block randomizer
       gameOver: false,              //if true, start over
+      mode: "desktop",              //def display mode
   });
   const [playingFieldBlocksCords, updatePlayingFieldBlocksCords] = useState([]);
   const [rowsToCheck, setRowsToCheck] = useState([]);
@@ -40,9 +41,18 @@ export function PlayingField() {
     if ("ontouchstart" in document.documentElement === true)
       setState((state) => ({
         ...state,
-        basicBlockSize: 20,
+        mode: "mobile",
       }));
-  }, [state.basicBlockSize]);
+  }, []);
+
+  useEffect(() => {
+    let scaleCoef = 20;
+    if (state.mode === "mobile") scaleCoef = 28;
+    setState((state) => ({
+      ...state,
+      basicBlockSize: Math.floor(window.innerHeight / scaleCoef),
+    }));
+  }, [state.mode]);
 
   useEffect(() => {
     if (state.toRenderCompositeBlock === false)

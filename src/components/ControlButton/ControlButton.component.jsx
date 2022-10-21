@@ -2,8 +2,9 @@ import "./ControlButton.styles.scss";
 
 export function ControlButton(props) {
   let style = {
-    // top: props.top,
-    // left: props.left,
+    height: props.defBlockState.basicBlockSize * 2,
+    width: props.defBlockState.basicBlockSize * 4,
+    backgroundColor: props.backgroundColor,
   };
   return (
     <div

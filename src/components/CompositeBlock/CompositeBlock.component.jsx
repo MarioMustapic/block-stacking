@@ -105,19 +105,16 @@ export function CompositeBlock(props) {
         ...state,
         toRotate: true,
       }));
-    if (e.code === "ArrowDown") return moveDown();
-    else if (e.code === "ArrowRight" && isCollisionRightTrue === false)
-      return moveRight();
-    else if (e.code === "ArrowLeft" && isCollisionLeftTrue === false)
-      return moveLeft();
-    else if (e.code === "ArrowUp" && isCollisionRotationTrue === false) {
-      return rotate();
+    if (e.code === "ArrowDown") moveDown();
+    if (e.code === "ArrowRight" && isCollisionRightTrue === false) moveRight();
+    if (e.code === "ArrowLeft" && isCollisionLeftTrue === false) moveLeft();
+    if (e.code === "ArrowUp" && isCollisionRotationTrue === false) {
+      rotate();
     }
   };
 
   const handleOnPointerDown = (e) => {
     e.preventDefault();
-    console.log(e.target.id);
     const collisionLeft = compositeBlockState.isInColision.left;
     let isCollisionLeftTrue = false;
     isCollisionLeftTrue =
@@ -256,10 +253,31 @@ export function CompositeBlock(props) {
       tabIndex={0}
     >
       {basicBlocks}
-      {"ontouchstart" in document.documentElement && (
-        <ControlsField handleOnPointerDown={handleOnPointerDown} />
-      )}
-      {/* <ControlsField handleOnPointerDown={handleOnPointerDown} /> */}
+      <div
+        className="controlsFieldDivContainer"
+        style={{
+          left: `${
+            -window.innerWidth / 2 +
+            compositeBlockState.basicBlockSize *
+              compositeBlockState.compositeBlockSize +
+            10
+          }px`,
+        }}
+      >
+        {/* {"ontouchstart" in document.documentElement && (
+          <ControlsField handleOnPointerDown={handleOnPointerDown} />
+        )} */}
+        {props.defBlockState.mode !== "desktop" && (
+          <ControlsField
+            handleOnPointerDown={handleOnPointerDown}
+            defBlockState={props.defBlockState}
+          />
+        )}
+        {/* <ControlsField
+          handleOnPointerDown={handleOnPointerDown}
+          defBlockState={props.defBlockState}
+        /> */}
+      </div>
     </div>
   );
 }

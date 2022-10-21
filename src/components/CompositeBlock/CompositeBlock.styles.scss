@@ -9,3 +9,12 @@
   top: 0;
   left: 0;
 }
+.controlsFieldDivContainer{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 97vw;
+  height: 93vh;
+  pointer-events: none;
+}
