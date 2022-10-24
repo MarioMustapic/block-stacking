@@ -46,7 +46,7 @@ export function PlayingField() {
   }, []);
 
   useEffect(() => {
-    let scaleCoef = 20;
+    let scaleCoef = 21; //scaling factor for basicBlockSize
     if (state.mode === "mobile") scaleCoef = 28;
     setState((state) => ({
       ...state,
@@ -129,10 +129,6 @@ export function PlayingField() {
       style={{
         width: `${state.basicBlockSize * state.playingFieldWidth}px`,
         height: `${state.basicBlockSize * state.playingFieldHeight}px`,
-        left: `${
-          window.innerWidth / 2 -
-          (state.basicBlockSize * state.playingFieldWidth) / 2
-        }px`,
       }}
     >
       {playingFieldBlock}
