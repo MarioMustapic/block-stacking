@@ -1,20 +1,16 @@
-import { DefState } from "../../models/DefState";
 import "./Sidebar.styles.scss";
 
 export function Sidebar(props) {
-  let scaleCoef = 21; //scaling factor for basicBlockSize
-  if ("ontouchstart" in document.documentElement === true) scaleCoef = 28;
-  let newBasicBlockSize = Math.floor(window.innerHeight / scaleCoef);
-
-  const defState = new DefState({ basicBlockSize: newBasicBlockSize });
-  console.log(defState);
   return (
-    <div
-      className="sidebar"
-      style={{
-        width: `${defState.basicBlockSize * 6}px`,
-        height: `${defState.basicBlockSize * defState.playingFieldHeight}px`,
-      }}
-    ></div>
+    <div className="sidebar" style={props.style}>
+      <h2>NEXT</h2>
+      <div className="sidebar__previewNext"></div>
+      <h2>SCORE</h2>
+      <p>#PH1</p>
+      <p>Tetris:#ph2</p>
+      <p>Triple:#ph3</p>
+      <p>Double:#ph4</p>
+      <p>Single:#ph5</p>
+    </div>
   );
 }

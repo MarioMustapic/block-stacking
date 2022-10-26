@@ -246,37 +246,21 @@ export function CompositeBlock(props) {
   };
 
   return (
-    <div
-      className="compositeBlock"
-      style={style}
-      onKeyDown={handleKeyDown}
-      tabIndex={0}
-    >
-      {basicBlocks}
+    <div className="wrapper">
+      {" "}
       <div
-        className="controlsFieldDivContainer"
-        style={{
-          left: `${
-            -window.innerWidth / 2 +
-            compositeBlockState.basicBlockSize *
-              compositeBlockState.compositeBlockSize +
-            10
-          }px`,
-        }}
+        className="compositeBlock"
+        style={style}
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
       >
-        {/* {"ontouchstart" in document.documentElement && (
-          <ControlsField handleOnPointerDown={handleOnPointerDown} />
-        )} */}
+        {basicBlocks}
         {props.defBlockState.mode !== "desktop" && (
           <ControlsField
             handleOnPointerDown={handleOnPointerDown}
             defBlockState={props.defBlockState}
           />
         )}
-        {/* <ControlsField
-          handleOnPointerDown={handleOnPointerDown}
-          defBlockState={props.defBlockState}
-        /> */}
       </div>
     </div>
   );

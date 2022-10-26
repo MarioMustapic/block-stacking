@@ -7,8 +7,9 @@ export function ControlsField(props) {
       <div
         className="controlsField"
         style={{
-          height: `${props.defBlockState.basicBlockSize * 8}px`,
-          width: `${props.defBlockState.basicBlockSize * 13}px`,
+          top: `${props.defBlockState.basicBlockSize * 20}px`,
+          height: `${props.defBlockState.basicBlockSize * 12}px`,
+          width: `${props.defBlockState.basicBlockSize * 16}px`,
         }}
       >
         <div>

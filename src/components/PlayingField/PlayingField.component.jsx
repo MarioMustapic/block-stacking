@@ -4,6 +4,7 @@ import { CompositeBlock } from "../CompositeBlock/CompositeBlock.component";
 import { PlayingFieldBlock } from "../PlayingFieldBlocks/PlayingFieldBlocks.component";
 import { useEffect } from "react";
 import { useRef } from "react";
+import { Sidebar } from "../Sidebar/Sidebar.component";
 
 export function PlayingField() {
   const playingFieldRef = useRef(null);
@@ -41,13 +42,13 @@ export function PlayingField() {
     if ("ontouchstart" in document.documentElement === true)
       setState((state) => ({
         ...state,
-        mode: "mobile",
+        mode: "mobile", //set to mobile if detecting touchscreen
       }));
   }, []);
 
   useEffect(() => {
-    let scaleCoef = 21; //scaling factor for basicBlockSize
-    if (state.mode === "mobile") scaleCoef = 28;
+    let scaleCoef = 22; //scaling factor for basicBlockSize
+    if (state.mode === "mobile") scaleCoef = 42;
     setState((state) => ({
       ...state,
       basicBlockSize: Math.floor(window.innerHeight / scaleCoef),
@@ -58,16 +59,15 @@ export function PlayingField() {
     if (state.toRenderCompositeBlock === false)
       setState((state) => ({
         ...state,
-        blockType: Math.floor(Math.random() * 7),
+        blockType: Math.floor(Math.random() * 7), //generate random block before rendering compositeBlock
         toRenderCompositeBlock: true,
       }));
     setGravityTick(0);
   }, [state.toRenderCompositeBlock]);
 
   useEffect(() => {
-    // "gravity" timer, make blocks move down on interval
     const timer = setInterval(() => {
-      setGravityTick((gravityTick) => gravityTick + 1);
+      setGravityTick((gravityTick) => gravityTick + 1); // "gravity" timer, make blocks move down on interval
     }, state.gravityTimer);
     return () => clearTimeout(timer);
   }, [state.gravityTimer]);
@@ -90,7 +90,7 @@ export function PlayingField() {
       return a - b;
     });
     rowsToCheck.forEach((row) => {
-      rowBlocks = playingFieldBlocksCords.filter((e) => e.top === row);
+      rowBlocks = playingFieldBlocksCords.filter((e) => e.top === row); //row completition logic
       if (rowBlocks.length === state.playingFieldWidth) {
         playingFieldBlocksCordsAfter = playingFieldBlocksCordsAfter.filter(
           (e) => e.top !== row
@@ -122,28 +122,42 @@ export function PlayingField() {
 
   return (
     <div
-      ref={playingFieldRef}
-      className="playingField"
-      onClick={handleClick}
-      tabIndex={0}
+      className="gameWrapper"
       style={{
-        width: `${state.basicBlockSize * state.playingFieldWidth}px`,
-        height: `${state.basicBlockSize * state.playingFieldHeight}px`,
+        width: `${2 * state.basicBlockSize * (state.playingFieldWidth + 1)}px`,
+        height: `${state.basicBlockSize * (state.playingFieldHeight + 1)}px`,
       }}
     >
-      {playingFieldBlock}
-      {state.toRenderCompositeBlock && (
-        <CompositeBlock
-          defBlockState={state}
-          setDefBlockState={setState}
-          playingFieldBlocksCords={playingFieldBlocksCords}
-          updatePlayingFieldBlocksCords={updatePlayingFieldBlocksCords}
-          gravityTick={gravityTick}
-          setGravityTick={setGravityTick}
-          rowsToCheck={rowsToCheck}
-          setRowsToCheck={setRowsToCheck}
-        />
-      )}
+      <div
+        ref={playingFieldRef}
+        className="playingField"
+        onClick={handleClick}
+        tabIndex={0}
+        style={{
+          width: `${state.basicBlockSize * state.playingFieldWidth}px`,
+          height: `${state.basicBlockSize * state.playingFieldHeight}px`,
+        }}
+      >
+        {playingFieldBlock}
+        {state.toRenderCompositeBlock && (
+          <CompositeBlock
+            defBlockState={state}
+            setDefBlockState={setState}
+            playingFieldBlocksCords={playingFieldBlocksCords}
+            updatePlayingFieldBlocksCords={updatePlayingFieldBlocksCords}
+            gravityTick={gravityTick}
+            setGravityTick={setGravityTick}
+            rowsToCheck={rowsToCheck}
+            setRowsToCheck={setRowsToCheck}
+          />
+        )}
+      </div>
+      <Sidebar
+        style={{
+          width: `${state.basicBlockSize * 6}px`,
+          height: `${state.basicBlockSize * state.playingFieldHeight}px`,
+        }}
+      />
     </div>
   );
 }

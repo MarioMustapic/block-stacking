@@ -2,9 +2,15 @@
   position: relative;
   display: flex;
   background-color: grey;
-  margin: 10px;
 }
 .playingField:focus,
 .playingField.focus {
   background-color: black;
+}
+.gameWrapper{
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
