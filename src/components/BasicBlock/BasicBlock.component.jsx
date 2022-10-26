@@ -174,14 +174,6 @@ export function BasicBlock(props) {
     (e) => e.left === calculatedX && e.top === calculatedY + 1
   );
   if (isInColisionDown.length > 0) blockCollisionDown = true;
-  let gameOverTrigger = props.playingFieldBlocksCords.filter(
-    //filters blocks with same cordinates (should only hapen when block spawns inside other existing blocks)
-    (e) => e.left === calculatedX && e.top === calculatedY
-  );
-  if (gameOverTrigger.length > 0) {
-    document.querySelectorAll(".basicBlock").forEach((e) => e.remove());
-    props.updatePlayingFieldBlocksCords([]);
-  }
 
   props.compositeBlockState.isInColision.down[props.indexkey] =
     !(
@@ -209,6 +201,18 @@ export function BasicBlock(props) {
     !(
       (calculatedX < props.defBlockState.playingFieldWidth - 1) //if it is out of bounds right
     ) || blockCollisionRight;
+
+  let gameOverTrigger = props.playingFieldBlocksCords.filter(
+    //filters blocks with same cordinates (should only hapen when block spawns inside other existing blocks)
+    (e) => e.left === calculatedX && e.top === calculatedY
+  );
+  if (gameOverTrigger.length > 0) {
+    props.updatePlayingFieldBlocksCords([]);
+    props.setDefBlockState((state) => ({
+      ...state,
+      score: [0, 0, 0, 0, 0],
+    }));
+  }
 
   const className = `basicBlock__${props.indexkey} basicBlock row__${calculatedY}`;
   const id_html = `row__${calculatedY} column__${calculatedX}`;

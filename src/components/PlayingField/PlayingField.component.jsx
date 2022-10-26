@@ -33,6 +33,7 @@ export function PlayingField() {
       blockType: Math.floor(Math.random() * 7),  //block randomizer
       gameOver: false,              //if true, start over
       mode: "desktop",              //def display mode
+      score:[0,0,0,0,0,],           //starting score, number of singles doubles triples and tetrises
   });
   const [playingFieldBlocksCords, updatePlayingFieldBlocksCords] = useState([]);
   const [rowsToCheck, setRowsToCheck] = useState([]);
@@ -86,12 +87,14 @@ export function PlayingField() {
   if (rowsToCheck.length !== 0) {
     let playingFieldBlocksCordsAfter = structuredClone(playingFieldBlocksCords);
     let rowBlocks = [];
+    let rowsCounter = 0;
     rowsToCheck.sort(function (a, b) {
       return a - b;
     });
     rowsToCheck.forEach((row) => {
       rowBlocks = playingFieldBlocksCords.filter((e) => e.top === row); //row completition logic
       if (rowBlocks.length === state.playingFieldWidth) {
+        rowsCounter = rowsCounter + 1;
         playingFieldBlocksCordsAfter = playingFieldBlocksCordsAfter.filter(
           (e) => e.top !== row
         );
@@ -104,6 +107,50 @@ export function PlayingField() {
         });
       }
     });
+    if (rowsCounter === 1)
+      setState((state) => ({
+        ...state,
+        score: [
+          state.score[0] + 100,
+          state.score[1] + 1,
+          state.score[2],
+          state.score[3],
+          state.score[4],
+        ],
+      }));
+    if (rowsCounter === 2)
+      setState((state) => ({
+        ...state,
+        score: [
+          state.score[0] + 300,
+          state.score[1],
+          state.score[2] + 1,
+          state.score[3],
+          state.score[4],
+        ],
+      }));
+    if (rowsCounter === 3)
+      setState((state) => ({
+        ...state,
+        score: [
+          state.score[0] + 600,
+          state.score[1],
+          state.score[2],
+          state.score[3] + 1,
+          state.score[4],
+        ],
+      }));
+    if (rowsCounter === 4)
+      setState((state) => ({
+        ...state,
+        score: [
+          state.score[0] + 1200,
+          state.score[1],
+          state.score[2],
+          state.score[3],
+          state.score[4] + 1,
+        ],
+      }));
     setRowsToCheck([]);
     updatePlayingFieldBlocksCords(playingFieldBlocksCordsAfter);
   }
@@ -157,6 +204,7 @@ export function PlayingField() {
           width: `${state.basicBlockSize * 6}px`,
           height: `${state.basicBlockSize * state.playingFieldHeight}px`,
         }}
+        defBlockState={state}
       />
     </div>
   );
