@@ -26,11 +26,11 @@ export function PlayingField() {
       playingFieldWidth: 10,
       playingFieldHeight: 20,
       text: "",                     //block text (atm no use)
-      gravityTimer: 700,         //timer for downward movment over time
+      gravityTimer: 700,            //timer for downward movment over time
       basicBlockSize: 25,           //size in pixels
       compositeBlockSize: 5,        //max height or width in number of basicBlocks
       backgroundColor: "",          //def background color
-      blockType: Math.floor(Math.random() * 7),  //block randomizer
+      blockType: { current: -1, next: -1 }, //block randomizer init values
       gameOver: false,              //if true, start over
       mode: "desktop",              //def display mode
       score:[0,0,0,0,0,],           //starting score, number of singles doubles triples and tetrises
@@ -60,7 +60,10 @@ export function PlayingField() {
     if (state.toRenderCompositeBlock === false)
       setState((state) => ({
         ...state,
-        blockType: Math.floor(Math.random() * 7), //generate random block before rendering compositeBlock
+        blockType: {
+          current: state.blockType.next, //generate random next block at start, and pass next to current
+          next: Math.floor(Math.random() * 7),
+        },
         toRenderCompositeBlock: true,
       }));
     setGravityTick(0);
@@ -72,6 +75,15 @@ export function PlayingField() {
     }, state.gravityTimer);
     return () => clearTimeout(timer);
   }, [state.gravityTimer]);
+
+  if (state.blockType.current < 0)
+    setState((state) => ({
+      ...state,
+      blockType: {
+        current: Math.floor(Math.random() * 7), //generate random blocks at start
+        next: Math.floor(Math.random() * 7),
+      },
+    }));
 
   const handleClick = (e) => {
     e.preventDefault();

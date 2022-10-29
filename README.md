@@ -46,15 +46,16 @@ Build the project for production.
   - [x] block collision logic
   - [x] handling row complete logic
   - [x] handling game over logic
+  - [x] showing next block
+  - [x] score and other stats
 - [x] support for touch and click, so it can be played on mobile(only basic, no repeat function if touch is "held down")
 
 ## Roadmap
 
 - [ ] Basic gamplay
-  - [ ] showing next block
   - [ ] rotation counterclockwise
   - [ ] more flashy game over and row deletion
-  - [ ] score and all-time high scores table
+  - [ ] all-time high scores table
 - [ ] options for keybindings, difficulty etc...
 - [ ] adding second player.
 - [ ] enabling multiplayer over net.

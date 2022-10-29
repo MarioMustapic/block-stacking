@@ -9,6 +9,13 @@
     line-height: 5vh;
 
     &__previewNext {
-    margin: 1vh;
+        margin: 1vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
+}
+.nextBlock{
+    position: absolute;
+    border: 1px solid black;
 }

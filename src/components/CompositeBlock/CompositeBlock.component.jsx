@@ -179,11 +179,12 @@ export function CompositeBlock(props) {
     [[1, 1, 0, 2], [1, 0, 0, 1], "teal", "unEvenLength", "Z-block"],
     [[1, 1, 2, 0], [1, 0, 0, 1], "pink", "unEvenLength", "S-block"],
   ];
-  const offsetX = compositeBlockList[props.defBlockState.blockType][0];
-  const offsetY = compositeBlockList[props.defBlockState.blockType][1];
-  const blockColor = compositeBlockList[props.defBlockState.blockType][2];
-  const length = compositeBlockList[props.defBlockState.blockType][3];
-  const name = compositeBlockList[props.defBlockState.blockType][4];
+  const offsetX = compositeBlockList[props.defBlockState.blockType.current][0];
+  const offsetY = compositeBlockList[props.defBlockState.blockType.current][1];
+  const blockColor =
+    compositeBlockList[props.defBlockState.blockType.current][2];
+  const length = compositeBlockList[props.defBlockState.blockType.current][3];
+  const name = compositeBlockList[props.defBlockState.blockType.current][4];
   const compositeBlockRecipe = {
     recipe: [
       {
