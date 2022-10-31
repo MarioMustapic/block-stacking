@@ -33,10 +33,10 @@ export function CompositeBlock(props) {
     }));
   };
   const moveDown = useCallback(() => {
-    const collision = compositeBlockState.isInColision.down;
+    const collision = compositeBlockState.isInCollision.down;
     let isCollisionTrue = false;
     isCollisionTrue =
-      collision[0] === true || //cheking if any block is in colision down
+      collision[0] === true || //checking if any block is in collision down
       collision[1] === true ||
       collision[2] === true ||
       collision[3] === true;
@@ -53,7 +53,7 @@ export function CompositeBlock(props) {
       ...state,
       top: compositeBlockState.top + 1,
     }));
-  }, [compositeBlockState.top, compositeBlockState.isInColision.down]);
+  }, [compositeBlockState.top, compositeBlockState.isInCollision.down]);
   useEffect(() => {
     if (props.gravityTick !== 0) {
       let abc = document.querySelector(".compositeBlock");
@@ -74,24 +74,24 @@ export function CompositeBlock(props) {
   };
   const handleKeyDown = (e) => {
     e.preventDefault();
-    const collisionLeft = compositeBlockState.isInColision.left;
+    const collisionLeft = compositeBlockState.isInCollision.left;
     let isCollisionLeftTrue = false;
     isCollisionLeftTrue =
-      collisionLeft[0] === true || //cheking if any block is in colision left
+      collisionLeft[0] === true || //checking if any block is in collision left
       collisionLeft[1] === true ||
       collisionLeft[2] === true ||
       collisionLeft[3] === true;
-    const collisionRight = compositeBlockState.isInColision.right;
+    const collisionRight = compositeBlockState.isInCollision.right;
     let isCollisionRightTrue = false;
     isCollisionRightTrue =
-      collisionRight[0] === true || //cheking if any block is in colision right
+      collisionRight[0] === true || //checking if any block is in collision right
       collisionRight[1] === true ||
       collisionRight[2] === true ||
       collisionRight[3] === true;
-    const collisionRotation = compositeBlockState.isInColision.rotation;
+    const collisionRotation = compositeBlockState.isInCollision.rotation;
     let isCollisionRotationTrue = false;
     isCollisionRotationTrue =
-      collisionRotation[0] === true || //cheking if any block is in rotation colision
+      collisionRotation[0] === true || //checking if any block is in rotation collision
       collisionRotation[1] === true ||
       collisionRotation[2] === true ||
       collisionRotation[3] === true;
@@ -115,24 +115,24 @@ export function CompositeBlock(props) {
 
   const handleOnPointerDown = (e) => {
     e.preventDefault();
-    const collisionLeft = compositeBlockState.isInColision.left;
+    const collisionLeft = compositeBlockState.isInCollision.left;
     let isCollisionLeftTrue = false;
     isCollisionLeftTrue =
-      collisionLeft[0] === true || //cheking if any block is in colision left
+      collisionLeft[0] === true || //checking if any block is in collision left
       collisionLeft[1] === true ||
       collisionLeft[2] === true ||
       collisionLeft[3] === true;
-    const collisionRight = compositeBlockState.isInColision.right;
+    const collisionRight = compositeBlockState.isInCollision.right;
     let isCollisionRightTrue = false;
     isCollisionRightTrue =
-      collisionRight[0] === true || //cheking if any block is in colision right
+      collisionRight[0] === true || //checking if any block is in collision right
       collisionRight[1] === true ||
       collisionRight[2] === true ||
       collisionRight[3] === true;
-    const collisionRotation = compositeBlockState.isInColision.rotation;
+    const collisionRotation = compositeBlockState.isInCollision.rotation;
     let isCollisionRotationTrue = false;
     isCollisionRotationTrue =
-      collisionRotation[0] === true || //cheking if any block is in rotation colision
+      collisionRotation[0] === true || //checking if any block is in rotation collision
       collisionRotation[1] === true ||
       collisionRotation[2] === true ||
       collisionRotation[3] === true;

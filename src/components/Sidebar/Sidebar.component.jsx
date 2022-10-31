@@ -18,40 +18,40 @@ export function Sidebar(props) {
     {
       width: `${props.defBlockState.basicBlockSize}px`,
       height: `${props.defBlockState.basicBlockSize}px`,
-      top: (1.5 + offsetY[0]) * props.defBlockState.basicBlockSize,
+      top: (2.5 + offsetY[0]) * props.defBlockState.basicBlockSize,
       left: (1.5 + offsetX[0]) * props.defBlockState.basicBlockSize,
       backgroundColor: blockColor,
     },
     {
       width: `${props.defBlockState.basicBlockSize}px`,
       height: `${props.defBlockState.basicBlockSize}px`,
-      top: (1.5 + offsetY[1]) * props.defBlockState.basicBlockSize,
+      top: (2.5 + offsetY[1]) * props.defBlockState.basicBlockSize,
       left: (1.5 + offsetX[1]) * props.defBlockState.basicBlockSize,
       backgroundColor: blockColor,
     },
     {
       width: `${props.defBlockState.basicBlockSize}px`,
       height: `${props.defBlockState.basicBlockSize}px`,
-      top: (1.5 + offsetY[2]) * props.defBlockState.basicBlockSize,
+      top: (2.5 + offsetY[2]) * props.defBlockState.basicBlockSize,
       left: (1.5 + offsetX[2]) * props.defBlockState.basicBlockSize,
       backgroundColor: blockColor,
     },
     {
       width: `${props.defBlockState.basicBlockSize}px`,
       height: `${props.defBlockState.basicBlockSize}px`,
-      top: (1.5 + offsetY[3]) * props.defBlockState.basicBlockSize,
+      top: (2.5 + offsetY[3]) * props.defBlockState.basicBlockSize,
       left: (1.5 + offsetX[3]) * props.defBlockState.basicBlockSize,
       backgroundColor: blockColor,
     },
   ];
   return (
     <div className="sidebar" style={props.style}>
-      <h2>NEXT</h2>
+      <h2 style={{ margin: "5px" }}>NEXT</h2>
       <div
         className="sidebar__previewNext"
         style={{
           width: `${props.defBlockState.basicBlockSize * 4}px`,
-          height: `${props.defBlockState.basicBlockSize * 4}px`,
+          height: `${props.defBlockState.basicBlockSize * 5}px`,
         }}
       >
         <div className="nextBlock" style={style[0]}></div>
@@ -59,8 +59,10 @@ export function Sidebar(props) {
         <div className="nextBlock" style={style[2]}></div>
         <div className="nextBlock" style={style[3]}></div>
       </div>
-      <h2>SCORE</h2>
-      <p>{props.defBlockState.score[0]}</p>
+      <h2 className="sidebar__score">SCORE</h2>
+      <p className="sidebar__score">{props.defBlockState.score[0]}</p>
+      <h2>Rows: {props.defBlockState.rowsCompleted}</h2>
+      <h2>Level: {props.defBlockState.level} </h2>
       <p>Tetris: {props.defBlockState.score[4]}</p>
       <p>Triple: {props.defBlockState.score[3]}</p>
       <p>Double: {props.defBlockState.score[2]}</p>

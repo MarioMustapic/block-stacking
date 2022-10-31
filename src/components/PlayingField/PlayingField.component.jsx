@@ -13,7 +13,7 @@ export function PlayingField() {
       top: 0,                       //def value for starting Y-axis position(top)
       left: 0,                      //def value for starting X-axis position(centered)
       rotation: 0,                  //def value for angle of composite block
-      isInColision:                 //def value for colision logic
+      isInCollision:                 //def value for collision logic
         {
           down:[false,false,false,false,],
           right:[false,false,false,false,],
@@ -26,14 +26,17 @@ export function PlayingField() {
       playingFieldWidth: 10,
       playingFieldHeight: 20,
       text: "",                     //block text (atm no use)
-      gravityTimer: 700,            //timer for downward movment over time
+      gravityTimer: 1000,           //starting timer for downward movement over time
+      rowsCompleted: 0,             //starting value for rows completed in one game
+      level: 0,                     //starting level
       basicBlockSize: 25,           //size in pixels
       compositeBlockSize: 5,        //max height or width in number of basicBlocks
       backgroundColor: "",          //def background color
-      blockType: { current: -1, next: -1 }, //block randomizer init values
+      blockType: { current: -1, next: -1 }, //block randomized init values
       gameOver: false,              //if true, start over
       mode: "desktop",              //def display mode
       score:[0,0,0,0,0,],           //starting score, number of singles doubles triples and tetrises
+      fontSize:62.5,             //starting font-size, used for desktop
   });
   const [playingFieldBlocksCords, updatePlayingFieldBlocksCords] = useState([]);
   const [rowsToCheck, setRowsToCheck] = useState([]);
@@ -53,6 +56,7 @@ export function PlayingField() {
     setState((state) => ({
       ...state,
       basicBlockSize: Math.floor(window.innerHeight / scaleCoef),
+      fontSize: 125,
     }));
   }, [state.mode]);
 
@@ -75,7 +79,12 @@ export function PlayingField() {
     }, state.gravityTimer);
     return () => clearTimeout(timer);
   }, [state.gravityTimer]);
-
+  useEffect(() => {
+    setState((state) => ({
+      ...state,
+      gravityTimer: 1000 - (state.level * state.gravityTimer) / 2,
+    }));
+  }, [state.level]);
   if (state.blockType.current < 0)
     setState((state) => ({
       ...state,
@@ -104,7 +113,7 @@ export function PlayingField() {
       return a - b;
     });
     rowsToCheck.forEach((row) => {
-      rowBlocks = playingFieldBlocksCords.filter((e) => e.top === row); //row completition logic
+      rowBlocks = playingFieldBlocksCords.filter((e) => e.top === row); //row completion logic
       if (rowBlocks.length === state.playingFieldWidth) {
         rowsCounter = rowsCounter + 1;
         playingFieldBlocksCordsAfter = playingFieldBlocksCordsAfter.filter(
@@ -119,6 +128,14 @@ export function PlayingField() {
         });
       }
     });
+    setState((state) => ({
+      ...state,
+      rowsCompleted: state.rowsCompleted + rowsCounter, // updating rowsCompleted
+    }));
+    setState((state) => ({
+      ...state,
+      level: Math.floor(state.rowsCompleted / 1), // updating level
+    }));
     if (rowsCounter === 1)
       setState((state) => ({
         ...state,
@@ -215,6 +232,8 @@ export function PlayingField() {
         style={{
           width: `${state.basicBlockSize * 6}px`,
           height: `${state.basicBlockSize * state.playingFieldHeight}px`,
+          fontsize: `${state.fontSize}%`,
+          lineHeight: `${state.basicBlockSize}px`,
         }}
         defBlockState={state}
       />

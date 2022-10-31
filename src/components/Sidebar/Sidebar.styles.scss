@@ -6,13 +6,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    line-height: 5vh;
-
+    
     &__previewNext {
         margin: 1vh;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    &__score {
+        font-size: 18px;
     }
 }
 .nextBlock{
